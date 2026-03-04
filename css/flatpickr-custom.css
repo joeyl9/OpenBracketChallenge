@@ -1,0 +1,53 @@
+/* Flatpickr Theme Overrides to match Admin Theme */
+.flatpickr-calendar {
+    background: #1e293b !important;
+    border: 1px solid #444 !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+.flatpickr-months .flatpickr-month,
+.flatpickr-weekdays,
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    background: #1e293b !important;
+    color: #fff !important;
+    fill: #fff !important;
+}
+
+.flatpickr-day {
+    color: #ccc !important;
+}
+
+.flatpickr-day:hover,
+.flatpickr-day:focus {
+    background: #334155 !important;
+    border-color: #334155 !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected:hover {
+    background: var(--accent-orange, #f59e0b) !important;
+    border-color: var(--accent-orange, #f59e0b) !important;
+    color: #fff !important;
+}
+
+.flatpickr-time {
+    background: #1e293b !important;
+    border-top: 1px solid #444 !important;
+}
+
+.flatpickr-time input:hover,
+.flatpickr-time .flatpickr-am-pm:hover,
+.flatpickr-time input:focus,
+.flatpickr-time .flatpickr-am-pm:focus {
+    background: #334155 !important;
+}
+
+.flatpickr-time .numInputWrapper span.arrowUp:after {
+    border-bottom-color: #fff !important;
+}
+
+.flatpickr-time .numInputWrapper span.arrowDown:after {
+    border-top-color: #fff !important;
+}

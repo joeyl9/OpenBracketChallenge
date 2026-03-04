@@ -1,0 +1,21 @@
+{
+  "name": "Bracket Challenge",
+  "short_name": "Bracket",
+  "start_url": "./dashboard.php",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "description": "Bracket Challenge",
+  "icons": [
+    {
+      "src": "images/scoreboard_icon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/scoreboard_icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+/* TinyMCE Theme Integration */
+/* Inherits variables from admin/header.php :root */
+
+/* UI Container */
+.tox.tox-tinymce {
+    border: 1px solid var(--border-color) !important;
+    border-radius: 8px !important;
+    background-color: var(--secondary-blue) !important;
+    box-shadow: none !important;
+}
+
+/* Toolbar & Header */
+.tox .tox-editor-header,
+.tox .tox-toolbar,
+.tox .tox-toolbar__primary,
+.tox .tox-toolbar-overlord {
+    background-color: var(--secondary-blue) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+/* Edit Area (Iframe container) */
+.tox .tox-edit-area__iframe {
+    background-color: var(--primary-blue) !important;
+    /* Matches input bg */
+}
+
+/* Buttons */
+.tox .tox-tbtn {
+    color: var(--text-light) !important;
+    border-radius: 4px !important;
+}
+
+.tox .tox-tbtn svg {
+    fill: var(--text-light) !important;
+}
+
+.tox .tox-tbtn:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: var(--accent-orange) !important;
+}
+
+.tox .tox-tbtn:hover svg {
+    fill: var(--accent-orange) !important;
+}
+
+.tox .tox-tbtn--enabled,
+.tox .tox-tbtn--enabled:hover {
+    background-color: var(--accent-orange) !important;
+    color: white !important;
+}
+
+.tox .tox-tbtn--enabled svg {
+    fill: white !important;
+}
+
+/* Status Bar */
+.tox .tox-statusbar {
+    background-color: var(--secondary-blue) !important;
+    border-top: 1px solid var(--border-color) !important;
+    color: var(--text-muted) !important;
+}
+
+.tox .tox-statusbar__path-item,
+.tox .tox-statusbar__wordcount {
+    color: var(--text-muted) !important;
+}
+
+/* Dropdowns / Menus */
+.tox .tox-menu {
+    background-color: var(--secondary-blue) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+.tox .tox-collection__item {
+    color: var(--text-light) !important;
+}
+
+.tox .tox-collection__item--active {
+    background-color: var(--accent-orange) !important;
+    color: white !important;
+}
+
+.tox .tox-collection__item-icon svg {
+    fill: var(--text-light) !important;
+}
+
+/* Dialogs */
+.tox .tox-dialog {
+    background-color: var(--secondary-blue) !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+    border-radius: 12px !important;
+}
+
+.tox .tox-dialog__header,
+.tox .tox-dialog__footer {
+    background-color: var(--secondary-blue) !important;
+    color: var(--text-light) !important;
+    border-color: var(--border-color) !important;
+}
+
+.tox .tox-dialog__title {
+    color: var(--text-light) !important;
+}
+
+.tox .tox-button {
+    background-color: var(--accent-orange) !important;
+    border-color: var(--accent-orange) !important;
+    color: white !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.tox .tox-button--secondary {
+    background-color: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-light) !important;
+}
+
+/* Form Inputs in Dialogs */
+.tox .tox-label,
+.tox .tox-listbox,
+.tox .tox-textarea,
+.tox .tox-textfield,
+.tox .tox-selectfield select {
+    color: var(--text-light) !important;
+    background-color: var(--primary-blue) !important;
+    border-color: var(--border-color) !important;
+}
+
+.tox .tox-listbox:hover,
+.tox .tox-textfield:focus {
+    border-color: var(--accent-orange) !important;
+}
