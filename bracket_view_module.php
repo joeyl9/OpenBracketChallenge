@@ -342,10 +342,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div style="font-size:0.8em; color:#666; margin-top:5px;">Tournament <?php echo date('Y'); ?></div>
             </div>
 
-            <h2 style="text-align:center; color:#fff; font-size:1.2rem;">SEMIFINALS</h2>
+            <h2 style="text-align:center; color:#fff; font-size:1.2rem; margin-bottom:15px;">SEMIFINALS</h2>
             
             <!-- Final Four Game 1 (61) -->
-            <div class="matchup">
+            <div class="matchup" style="margin-bottom: 30px;">
                 <!-- Slot 0: Winner of Region 1 (Game 57 winner -> Picks[57]) -->
                 <div class="team" data-gameid="61"><?php echo isset($picks[57]) ? $picks[57] : '&nbsp;'; ?></div>
                 <!-- Slot 1: Winner of Region 2 (Game 58 winner -> Picks[58]) -->
@@ -353,32 +353,35 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
 
             <!-- Final Four Game 2 (62) -->
-            <div class="matchup">
+            <div class="matchup" style="margin-bottom: 30px;">
                 <!-- Slot 0: Winner of Region 3 (Game 59 winner -> Picks[59]) -->
                 <div class="team" data-gameid="62"><?php echo isset($picks[59]) ? $picks[59] : '&nbsp;'; ?></div>
                 <!-- Slot 1: Winner of Region 4 (Game 60 winner -> Picks[60]) -->
                 <div class="team" data-gameid="62"><?php echo isset($picks[60]) ? $picks[60] : '&nbsp;'; ?></div>
             </div>
 
-            <h2 style="text-align:center; color:var(--accent-orange); font-size:1.4rem;">CHAMPIONSHIP</h2>
+            <h2 style="text-align:center; color:#fff; font-size:1.3rem; margin-top:20px; margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">Championship</h2>
             <!-- Championship (63) -->
-            <div class="matchup" style="border: 2px solid var(--accent-orange);">
+            <div class="matchup">
                 <!-- Slot 0: Winner of Game 61 -> Picks[61] -->
                 <div class="team" data-gameid="63"><?php echo isset($picks[61]) ? $picks[61] : '&nbsp;'; ?></div>
                 <!-- Slot 1: Winner of Game 62 -> Picks[62] -->
                 <div class="team" data-gameid="63"><?php echo isset($picks[62]) ? $picks[62] : '&nbsp;'; ?></div>
             </div>
 
-            <div style="text-align:center; margin-top:20px;">
-                <h3 style="color:#fff;"><?php echo date('Y'); ?> Champion</h3>
-                <div id="champion_display" class="team" data-gameid="63" style="font-size:1.5em; font-weight:bold; color:var(--accent-orange); min-height:40px; margin-bottom: 20px;">
-                    <?php echo isset($picks[63]) ? $picks[63] : '?'; ?>
+            <div style="text-align:center; margin-top:30px;">
+                <h3 style="color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:15px;"><?php echo date('Y'); ?> Champion</h3>
+                <div class="matchup" style="display:inline-block; min-width:250px; margin-bottom:30px;">
+                    <div id="champion_display" class="team" data-gameid="63" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; white-space:normal; font-size:1.2em; font-weight:bold; padding:15px 25px; line-height:1.5;">
+                        <?php echo isset($picks[63]) ? $picks[63] : '?'; ?>
+                    </div>
                 </div>
+                <br>
                 
                 <?php if( !empty($picks['tiebreaker']) ) { ?>
-                <div style="background: #333; padding: 10px; border-radius: 5px; display:inline-block; border:1px solid #444;">
-                    <label style="color:#aaa; font-size:0.8em;">TIEBREAKER</label><br>
-                    <span style="font-size:1.2em; color:#fff; font-weight:bold;"><?php echo $picks['tiebreaker']; ?></span>
+                <div style="background: rgba(255,255,255,0.05); padding: 12px 20px; border-radius: 8px; display:inline-block; border:1px solid rgba(255,255,255,0.1);">
+                    <label style="color:var(--text-muted); font-size:0.75rem; text-transform:uppercase; letter-spacing:1px;">Tiebreaker</label><br>
+                    <span style="font-size:1.4rem; color:white; font-weight:bold;"><?php echo $picks['tiebreaker']; ?></span>
                 </div>
                 <?php } ?>
             </div>
