@@ -26,14 +26,14 @@ You will need a web server (Apache, Nginx, or IIS) with PHP 8+ and access to a M
 
 1. Clone or copy this repository into a directory served by your web server.
 2. Create a new MySQL/MariaDB database and a user with privileges for it.
-3. Open `admin/install_ui.php` in your browser.
+3. Open `admin/install.php` in your browser.
 4. Follow the setup wizard to configure the database connection and complete the initial setup.
 
 If you are not using the wizard, you can manually copy `admin/database.php.tmpl` to `admin/database.php` and configure it directly.
 
 ## New Features
 
-* **Install Wizard**: The `install_ui.php` setup flow is newer than the older manual configuration path.
+* **Install Wizard**: The `install.php` setup flow is newer than the older manual configuration path.
 * **Admin Roles**: Registered accounts can be made administrators with different permission levels:
     * **Super Admin**: Full control. Can manage all settings, edit users, delete participants, and update site structure.
     * **Limited Admin**: Standard day-to-day management. Can edit brackets and view data. Cannot delete other administrators.
