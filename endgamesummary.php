@@ -45,7 +45,9 @@ include('endgamesummary_view_module.php');
 					<!-- View Toggle -->
 					<div style="font-size:0.9rem; background:var(--primary-blue); padding:4px; border-radius:30px; border:1px solid var(--border-color); display:flex; align-items:center;">
 						<a href='endgamesummary.php?view=main&sort=<?php echo $sort; ?>' style='text-decoration:none; padding:5px 15px; border-radius:20px; transition:all 0.2s; <?php echo $mainStyle; ?>'>Main</a>
+						<?php if ($S16_ENABLED == 1) { ?>
 						<a href='endgamesummary.php?view=sweet16&sort=<?php echo $sort; ?>' style='text-decoration:none; padding:5px 15px; border-radius:20px; transition:all 0.2s; <?php echo $s16Style; ?>'>Second Chance</a>
+						<?php } ?>
 					</div>
 					
 					<!-- Sort Toggle -->
@@ -72,7 +74,7 @@ include('endgamesummary_view_module.php');
 				?>
 				
 				<!-- Rank Cards Grid -->
-				<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap:24px; align-items:start; width:100%; box-sizing:border-box; margin-bottom:40px;">
+				<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap:24px; align-items:start; width:100%; box-sizing:border-box; margin-bottom:40px;">
 					
 					<?php
 					for( $showRanks=1; $showRanks <= $maxScoreRanks; $showRanks++ )
@@ -80,13 +82,20 @@ include('endgamesummary_view_module.php');
 						$rankName = ordinal_suffix( $showRanks ) . " Place";
 						createSummaryTable($db, $showRanks, $rankName, $viewAll, $summary_data['num_scenarios'], $sort, $view);
 					}
+					
+					// Add Last Place as a standard grid card to match formatting
+					if ($lowestRank > 0 && $lowestRank > $maxScoreRanks) {
+					    createSummaryTable($db, $lowestRank, "Last Place", $viewAll, $summary_data['num_scenarios'], $sort, $view); 
+					} else if ($lowestRank > 0 && $summary_data['num_scenarios'] > 0 && $maxScoreRanks >= $lowestRank) {
+					    // If we have fewer players than maxScoreRanks (e.g. 3 players, max is 5), 
+					    // and the lowest rank was already shown above... we technically don't need a DUPLICATE Last Place card.
+					    // However, the user explicitly wants to see "LAST PLACE" formatting.
+					    createSummaryTable($db, $lowestRank, "Last Place", $viewAll, $summary_data['num_scenarios'], $sort, $view); 
+					} else {
+					    createSummaryTable($db, $lowestRank, "Last Place", $viewAll, $summary_data['num_scenarios'], $sort, $view); 
+					}
 					?>
 					
-				</div>
-				
-				<!-- Last Place Section -->
-				<div style="margin-top:60px; padding-top:40px; border-top:1px solid rgba(255,255,255,0.05); position:relative;">
-					<?php createSummaryTable($db, $lowestRank, "Last Place", $viewAll, $summary_data['num_scenarios'], $sort, $view); ?>
 				</div>
 
 			</div>

@@ -92,7 +92,7 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
 	}
 	
 	// Card Container
-	echo "<div class='dashboard-card' style='background:$cardBg; border:1px solid $borderColor; border-radius:16px; display:flex; flex-direction:column; height:100%; box-shadow:0 10px 15px -3px rgba(0, 0, 0, 0.1); padding:24px;'>";
+	echo "<div class='dashboard-card' style='background:$cardBg; border:1px solid $borderColor; border-radius:16px; display:flex; flex-direction:column; align-items:stretch; width:100%; height:100%; box-sizing:border-box; box-shadow:0 10px 15px -3px rgba(0, 0, 0, 0.1); padding:16px;'>";
 	
 	// Detached Header
 	echo "<div style='text-align:center; margin-bottom:20px;'>";
@@ -101,13 +101,13 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
 	echo "</div>";
 	
 	// Table Container (Inner Card)
-	echo "<div class='custom-scrollbar' style='flex:1; overflow-y:auto; overflow-x:hidden; max-height:450px; background:$innerBg; border-radius:8px; border:1px solid $borderColor;'>";
-	echo "<table style='width:100%; border-collapse:collapse; font-size:0.95rem;'>";
+	echo "<div class='table-container custom-scrollbar' style='flex:1; overflow-y:auto; max-height:450px; background:$innerBg; border-radius:8px; border:1px solid $borderColor;'>";
+	echo "<table style='width:100%; table-layout:fixed; border-collapse:collapse; font-size:0.95rem;'>";
 	echo "<thead style='position:sticky; top:0; background:#0f172a; z-index:10; box-shadow:0 2px 4px rgba(0,0,0,0.1);'>"; 
 	echo "<tr style='color:$mutedColor; text-transform:uppercase; font-size:0.75rem; letter-spacing:0.05em;'>";
-	echo "<th style='padding:14px 24px; font-weight:600; text-align:left;'>Bracket</th>";
-	echo "<th style='padding:14px 24px; font-weight:600; text-align:center;'>Paths</th>";
-	echo "<th style='padding:14px 24px; font-weight:600; text-align:right;'>Win %</th>";
+	echo "<th style='width:50%; padding:14px 4px; font-weight:600; text-align:left;'>Bracket</th>";
+	echo "<th style='width:25%; padding:14px 4px; font-weight:600; text-align:center;'>Paths</th>";
+	echo "<th style='width:25%; padding:14px 4px; font-weight:600; text-align:right;'>Win %</th>";
 	echo "</tr>";
 	echo "</thead>";
 	echo "<tbody>";
@@ -126,7 +126,8 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
 		$pWin = $row['pWin'];
 		
 		$pWinDisplay = number_format(100*$pWin, 1) . "%";
-		$pathsPct = ($totalScenarios > 0) ? number_format(100*($numPaths/$totalScenarios),0) . "%" : "0%";
+		$cappedPaths = min($numPaths, max(1, $totalScenarios));
+		$pathsPct = ($totalScenarios > 0) ? number_format(100*($cappedPaths/$totalScenarios),0) . "%" : "0%";
 		
 		$isMe = (isset($_SESSION['useremail']) && $useremail == $_SESSION['useremail'] && $useremail != "");
 		
@@ -137,11 +138,11 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
 		echo "<tr style='$rowStyle background:$bg;' onmouseover=\"this.style.background='$hoverBg'\" onmouseout=\"this.style.background='$bg'\">";
 		
 		// Name
-		echo "<td style='padding:14px 24px;'>";
+		echo "<td style='padding:14px 4px;'>";
 		echo "<div style='display:flex; align-items:center;'>";
 		$nameColor = $isMe ? "#fb923c" : "#fff"; 
 		$weight = $isMe ? "700" : "500";
-		echo "<a href='view.php?id=$bID' style='color:$nameColor; font-weight:$weight; text-decoration:none; font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px; display:block;'>".h($bName)."</a>";
+		echo "<a href='view.php?id=$bID' style='color:$nameColor; font-weight:$weight; text-decoration:none; font-size:1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%; display:block;'>".h($bName)."</a>";
 		
         // Comment icon logic was intentionally removed here to optimize the query payload.
         // It can be restored later by reintroducing getCommentsMap($db) if needed in this view.
@@ -150,7 +151,7 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
 		echo "</td>";
 		
 		// Paths
-		echo "<td style='padding:14px 24px; text-align:center;'>";
+		echo "<td style='padding:14px 4px; text-align:center;'>";
 		echo "<div style='display:flex; flex-direction:column; align-items:center;'>";
 		echo "<a href='endgame.php?id=$bID&rank=$rank' style='text-decoration:none; display:flex; flex-direction:column; align-items:center; transition:opacity 0.2s;' onmouseover=\"this.style.opacity='0.7'\" onmouseout=\"this.style.opacity='1'\">";
 		echo "<span style='color:$textColor; font-weight:600; text-decoration:underline; text-decoration-color:$mutedColor;'>$numPaths</span>";
@@ -160,7 +161,7 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
 		echo "</td>";
 		
 		// Probability Pill
-		echo "<td style='padding:14px 24px; text-align:right;'>";
+		echo "<td style='padding:14px 4px; text-align:right;'>";
 		
 		// Color based on Rank in List (Medals)
 		$pillColor = "#334155"; // Default Slate

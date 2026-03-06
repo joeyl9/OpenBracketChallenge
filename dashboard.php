@@ -242,9 +242,9 @@ $recent_comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="dashboard-grid">
             <!-- Bracket Status -->
-            <div class="dashboard-card" style="grid-column: span 2; align-items: flex-start; text-align: left; position: relative; z-index: 20;">
+            <div class="dashboard-card dashboard-span-2" style="align-items: flex-start; text-align: left; position: relative; z-index: 20;">
                 <h3 style="width: 100%; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">My Bracket</h3>
-                <div style="display: flex; gap: 2rem; align-items: center; width: 100%;">
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: flex-start; width: 100%;">
                     <?php if ($has_bracket): ?>
                         <div style="flex: 1;">
                              <p style="font-size: 1.1rem; color: var(--text-light);">
@@ -362,11 +362,11 @@ $recent_comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <!-- Rivalry Watch -->
-            <div class="dashboard-card" style="grid-column: span 3; align-items: flex-start; text-align: left;">
-                 <div style="display:flex; justify-content:space-between; align-items:center; width:100%; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
+            <div class="dashboard-card dashboard-span-3" style="align-items: flex-start; text-align: left;">
+                 <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; width:100%; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;">
                     <h3 style="margin:0;"><i class="fa-solid fa-users"></i> Rivalry Watch</h3>
-                    <form method="post" style="display:flex; gap:10px; position:relative;">
-                        <input type="text" id="rival_search" name="rival_name" placeholder="Search Bracket, Name, or Email..." style="padding:6px; font-size:0.8rem; margin:0; width:220px;" autocomplete="off" required>
+                    <form method="post" style="display:flex; gap:10px; position:relative; flex:1; min-width:200px; max-width:100%;">
+                        <input type="text" id="rival_search" name="rival_name" placeholder="Search Bracket, Name..." style="flex:1; padding:6px; font-size:0.8rem; margin:0;" autocomplete="off" required>
                         <input type="hidden" name="rival_target_id" id="rival_target_id" value="">
                         <button type="submit" name="add_rival" id="add_rival_btn" style="padding:6px 12px; font-size:0.8rem;">Add</button>
                         
@@ -505,7 +505,7 @@ $recent_comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <!-- Activity Feed -->
-            <div class="dashboard-card" style="grid-column: span 1; align-items: flex-start; text-align: left; overflow: hidden;">
+            <div class="dashboard-card" style="align-items: flex-start; text-align: left; overflow: hidden;">
                 <h3 style="width: 100%; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;"><i class="fa-solid fa-comments"></i> Live Smack Talk</h3>
                 
                 <!-- Chat Window -->
@@ -638,7 +638,7 @@ $recent_comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </script>
             </div>
             <!-- Trophy Case -->
-            <div class="dashboard-card" style="grid-column: span 3; align-items: flex-start; text-align: left;">
+            <div class="dashboard-card dashboard-span-3" style="align-items: flex-start; text-align: left;">
                  <h3 style="width: 100%; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;"><i class="fa-solid fa-award"></i> Trophy Case</h3>
                  <div style="display:flex; gap:15px; flex-wrap:wrap;">
                     <?php
@@ -686,7 +686,7 @@ $recent_comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <!-- My History -->
-            <div class="dashboard-card" style="grid-column: span 3; align-items: flex-start; text-align: left;">
+            <div class="dashboard-card dashboard-span-3" style="align-items: flex-start; text-align: left;">
                  <h3 style="width: 100%; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; margin-bottom: 1rem;"><i class="fa-solid fa-clock-rotate-left"></i> My History</h3>
                  <div class="table-container">
                  <table style="width:100%; border-collapse: collapse; font-size: 0.9rem;">

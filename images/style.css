@@ -548,9 +548,21 @@ div.success,
     margin-top: 1rem;
 }
 
+/* Responsive Dashboard Spans */
+@media (min-width: 768px) {
+    .dashboard-span-2 {
+        grid-column: span 2;
+    }
+
+    .dashboard-span-3 {
+        grid-column: span 3;
+    }
+}
+
 .dashboard-card {
     background: var(--secondary-blue);
     padding: 2rem;
+    box-sizing: border-box;
     border-radius: 12px;
     border: 1px solid var(--border-color);
     text-align: center;
@@ -1385,6 +1397,7 @@ button.dashboard-card {
 .content-card {
     background: var(--secondary-blue);
     padding: 2rem;
+    box-sizing: border-box;
     border-radius: 12px;
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -1404,4 +1417,11 @@ button.dashboard-card {
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
     }
+}
+
+/* Base Utility Classes */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
 }
