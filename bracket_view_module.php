@@ -260,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
             clone.style.position = 'absolute';
             clone.style.left = '-9999px';
             clone.style.top = '0px';
+            clone.style.transform = 'none'; // Ensure CSS scaling logic does not corrupt PDF
             clone.style.width = '1600px'; // Force width
             clone.style.padding = '40px';
             clone.style.background = '#FFFFFF';
@@ -324,7 +325,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </script>
 	  </div>
 
-     <div class="bracket-wrapper" style="background: transparent;">
+     <!-- Responsive Desktop Fit-to-Viewport Polish Wrapper -->
+     <div id="bracket-scale-container" style="width: 100%; overflow: visible;">
+         <div class="bracket-wrapper" id="bracket-wrapper-inner" style="background: transparent;">
         <!-- LEFT SIDE -->
         <div class="bracket-split-left">
             <?php renderViewRegion($meta['region1'], 1, array(1,2,3,4,5,6,7,8), array(33,34,35,36), array(49,50), 57, $team_data, $picks, 61, 0); ?>
@@ -392,7 +395,11 @@ document.addEventListener('DOMContentLoaded', function() {
             <?php renderViewRegion($meta['region3'], 33, array(17,18,19,20,21,22,23,24), array(41,42,43,44), array(53,54), 59, $team_data, $picks, 62, 0); ?>
             <?php renderViewRegion($meta['region4'], 49, array(25,26,27,28,29,30,31,32), array(45,46,47,48), array(55,56), 60, $team_data, $picks, 62, 1); ?>
         </div>
-     </div>
+      </div>
+     </div> <!-- END bracket-scale-container -->
+
+
+
    </div> 
 </div> 
 
@@ -403,7 +410,7 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
 	echo "<div class='region-container'>";
 	
 	// Round 1
-	echo "<div class='round'><h3>$name Round 1</h3>";
+	echo "<div class='round regional-round regional-round-1'><h3>$name Round 1</h3>";
 	foreach($r1Games as $gId) {
 		$t1_idx = ($gId * 2) - 1;
 		$t2_idx = $gId * 2;
@@ -419,7 +426,7 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
 	echo "</div>";
 
 	// Round 2
-	echo "<div class='round'><h3>Round 2</h3>";
+	echo "<div class='round regional-round regional-round-2'><h3>Round 2</h3>";
 	foreach($r2Games as $gId) {
         $src1 = ($gId - 32) * 2 - 1;
         $src2 = ($gId - 32) * 2;
@@ -432,7 +439,7 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
 	echo "</div>";
 
 	// Round 3 (Sweet 16)
-	echo "<div class='round'><h3>Round of 16</h3>";
+	echo "<div class='round regional-round regional-round-3'><h3>Round of 16</h3>";
 	foreach($r3Games as $gId) {
         $src1 = 33 + ($gId - 49) * 2;
         $src2 = $src1 + 1;
@@ -445,7 +452,7 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
 	echo "</div>";
 
 	// Round 4 (Elite 8)
-	echo "<div class='round'><h3>Quarterfinals</h3>";
+	echo "<div class='round regional-round regional-round-4'><h3>Quarterfinals</h3>";
 	$gId = $r4Game; // e.g. 57
     
     $src1 = 49 + ($gId - 57) * 2;

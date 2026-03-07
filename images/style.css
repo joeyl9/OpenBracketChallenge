@@ -897,9 +897,10 @@ button.dashboard-card {
 .bracket-wrapper {
     display: flex;
     justify-content: space-between;
+    gap: 0;
     padding: 20px;
     /* More padding to prevent edge visual cutoff */
-    overflow-x: auto;
+    overflow: visible;
     background: #111;
     width: 100%;
     box-sizing: border-box;
@@ -912,7 +913,9 @@ button.dashboard-card {
     display: flex;
     flex-direction: column;
     /* Stack regions vertically */
-    flex: 4;
+    flex: 1 1 0;
+    max-width: none;
+    min-width: 0;
     /* Takes up proportional space */
     gap: 20px;
 }
@@ -922,8 +925,10 @@ button.dashboard-card {
     flex-direction: column;
     justify-content: center;
     padding: 0 5px;
-    flex: 2;
-    min-width: 160px;
+    flex: 0 0 auto;
+    min-width: 180px;
+    margin-left: 12px;
+    margin-right: 12px;
 }
 
 .region-container {
@@ -931,6 +936,7 @@ button.dashboard-card {
     flex-direction: row;
     flex: 1;
     width: 100%;
+    min-width: 0;
 }
 
 .bracket-split-right .region-container {
@@ -947,6 +953,85 @@ button.dashboard-card {
     /* Allow rounds to shrink fully to fit the screen */
     flex-shrink: 1;
     /* Allow slight squishing if really needed */
+}
+
+/* Explicit Geometric Geometry via Regional Target Margin Overrides */
+:root {
+    --matchup-height: 54px;
+    /* Rendered box logic */
+    --matchup-gap: 8px;
+    /* INCREMENTAL TUNING: 4px -> 8px */
+    --step-unit: calc(var(--matchup-height) + var(--matchup-gap));
+    /* 62px */
+}
+
+.regional-round {
+    justify-content: flex-start;
+}
+
+.regional-round h3 {
+    min-height: 32px;
+    margin: 0 0 0px 0;
+    padding-bottom: 4px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    color: #ccc;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+/* Base matchup normalizations */
+.regional-round .matchup {
+    margin-top: 0;
+}
+
+.regional-round .matchup:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Round 1 */
+.regional-round-1 .matchup {
+    margin-bottom: 8px;
+}
+
+.regional-round-1 .matchup:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Round 2 */
+.regional-round-2 .matchup:first-of-type {
+    margin-top: 31px;
+}
+
+.regional-round-2 .matchup {
+    margin-bottom: 70px;
+}
+
+.regional-round-2 .matchup:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Round 3 */
+.regional-round-3 .matchup:first-of-type {
+    margin-top: 98px;
+}
+
+.regional-round-3 .matchup {
+    margin-bottom: 203px;
+}
+
+.regional-round-3 .matchup:last-of-type {
+    margin-bottom: 0;
+}
+
+/* Round 4 */
+.regional-round-4 .matchup:first-of-type {
+    margin-top: 236px;
+}
+
+.regional-round-4 .matchup {
+    margin-bottom: 0;
 }
 
 .matchup {
@@ -1206,8 +1291,6 @@ button.dashboard-card {
 }
 
 /* Bracket Visual Feedback (Correct/Incorrect) */
-.strike,
-/* Blog Cards */
 /* Blog Cards */
 .blog-card {
     background: var(--secondary-blue);
