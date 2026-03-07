@@ -1145,7 +1145,42 @@ button.dashboard-card {
     }
 }
 
-/* Print Styles */
+/* === Admin Mobile Fixes === */
+@media (max-width: 768px) {
+
+    /* Tab nav: stack vertically on mobile */
+    .admin-tab-nav {
+        flex-direction: column;
+        gap: 0;
+        border-bottom: none !important;
+    }
+
+    .admin-tab-nav a {
+        border-bottom: none !important;
+        border-left: 2px solid transparent;
+        padding: 10px 15px !important;
+    }
+
+    .admin-tab-nav a.tab-active {
+        border-left: 2px solid var(--accent-orange) !important;
+        border-bottom: none !important;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Scoped table/card overflow fix - opt-in only */
+    .dashboard-card.mobile-clamped {
+        overflow-x: auto !important;
+        overflow-y: visible;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    /* Reset inline grid-column span overrides on mobile */
+    .dashboard-grid .dashboard-card {
+        grid-column: 1 / -1 !important;
+    }
+}
+
 /* Print Styles */
 @media print {
 

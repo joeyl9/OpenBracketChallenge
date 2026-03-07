@@ -98,8 +98,8 @@ if (isset($_GET['search_user']) && !empty($_GET['search_term'])) {
 <div id="main">
     <div class="full">
         <!-- Tab Navigation -->
-        <div style="display:flex; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
-            <a href="users.php" style="padding:10px 20px; text-decoration:none; border-bottom:2px solid var(--accent-orange); color:var(--text-light); font-weight:bold;">Administrators</a>
+        <div class="admin-tab-nav" style="display:flex; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
+            <a href="users.php" class="tab-active" style="padding:10px 20px; text-decoration:none; border-bottom:2px solid var(--accent-orange); color:var(--text-light); font-weight:bold;">Administrators</a>
             <a href="participants.php" style="padding:10px 20px; text-decoration:none; color:var(--text-muted); border-bottom:2px solid transparent;">Participants (Brackets)</a>
         </div>
 
@@ -135,7 +135,7 @@ if (isset($_GET['search_user']) && !empty($_GET['search_term'])) {
             </div>
 
             <!-- (Legacy) Existing Users -->
-            <div class="dashboard-card" style="grid-column: span 2; align-items: flex-start; text-align: left;">
+            <div class="dashboard-card mobile-clamped" style="grid-column: span 2; align-items: flex-start; text-align: left;">
                 <h3>Legacy / Break-Glass Administrators</h3>
                 <div style="margin-bottom:15px; color:#fca5a5; font-size:0.9em; background:rgba(255,0,0,0.1); padding:10px; border:1px solid #ef4444; border-radius:4px;">
                     <strong>Note:</strong> These are legacy backup accounts. For day-to-day admin, please promote regular users using the "Unified User Role Management" section below.
@@ -177,13 +177,13 @@ if (isset($_GET['search_user']) && !empty($_GET['search_term'])) {
             </div>
 
             <!-- Unified User Role Management -->
-            <div class="dashboard-card" style="grid-column: span 3; align-items: flex-start; text-align: left; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            <div class="dashboard-card mobile-clamped" style="grid-column: span 3; align-items: flex-start; text-align: left; padding-top: 20px;">
                 <h3 style="color:var(--accent-orange);">Unified User Role Management</h3>
                 <p style="color:var(--text-muted); margin-bottom: 20px;">Search for any user to assign them an admin role.</p>
                 
                 <!-- Search Form -->
                 <form method="get" action="users.php" style="margin-bottom: 20px; display:flex; gap:10px;">
-                    <input type="text" name="search_term" value="<?php echo htmlspecialchars($search_term); ?>" placeholder="Search by name or email..." style="padding:10px; border-radius:4px; border:1px solid #444; background:rgba(0,0,0,0.2); color:#fff; width:300px;">
+                    <input type="text" name="search_term" value="<?php echo htmlspecialchars($search_term); ?>" placeholder="Search by name or email..." style="padding:10px; border-radius:4px; border:1px solid #444; background:rgba(0,0,0,0.2); color:#fff; width:100%; max-width:300px;">
                     <input type="submit" name="search_user" value="Search" style="background:var(--primary-blue); border:1px solid var(--accent-orange); color:var(--accent-orange);">
                 </form>
 

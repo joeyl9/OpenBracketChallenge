@@ -54,9 +54,9 @@ $users = $db->query("SELECT id, person, name, email, paid, disabled, type FROM b
 <div id="main">
     <div class="full">
         <!-- Tab Navigation -->
-        <div style="display:flex; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
+        <div class="admin-tab-nav" style="display:flex; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:20px;">
             <a href="users.php" style="padding:10px 20px; text-decoration:none; color:var(--text-muted); border-bottom:2px solid transparent;">Administrators</a>
-            <a href="participants.php" style="padding:10px 20px; text-decoration:none; border-bottom:2px solid var(--accent-orange); color:var(--text-light); font-weight:bold;">Participants (Brackets)</a>
+            <a href="participants.php" class="tab-active" style="padding:10px 20px; text-decoration:none; border-bottom:2px solid var(--accent-orange); color:var(--text-light); font-weight:bold;">Participants (Brackets)</a>
         </div>
 
         <h2>Participant Management</h2>
@@ -67,7 +67,7 @@ $users = $db->query("SELECT id, person, name, email, paid, disabled, type FROM b
         <?php if($msg) echo "<div class='success'>$msg</div>"; ?>
         <?php if($error) echo "<div class='error'>$error</div>"; ?>
         
-        <div class="dashboard-card" style="align-items: flex-start; text-align: left;">
+        <div class="dashboard-card mobile-clamped" style="align-items: flex-start; text-align: left;">
             <div class="table-container">
                 <table style="width:100%; border-collapse:collapse;">
                     <thead>
