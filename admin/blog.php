@@ -42,6 +42,9 @@ if(isset($_POST['edit_post_id'])) {
 			<?php csrf_field(); ?>
 			<input type="hidden" name="id" value="<?php echo $p_id; ?>">
 			<h2><?php echo $formHeader; ?></h2>
+            <div style="margin-bottom: 20px;">
+                <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+            </div>
 			
 			<?php if($p_id) { ?>
 			<div style="margin-bottom:10px; color: var(--accent-orange);">

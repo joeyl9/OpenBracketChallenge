@@ -60,6 +60,9 @@ $users = $db->query("SELECT id, person, name, email, paid, disabled, type FROM b
         </div>
 
         <h2>Participant Management</h2>
+        <div style="margin-bottom: 20px;">
+            <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+        </div>
         
         <?php if($msg) echo "<div class='success'>$msg</div>"; ?>
         <?php if($error) echo "<div class='error'>$error</div>"; ?>

@@ -20,6 +20,9 @@ $logs = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 <div id="main">
     <div class="full">
         <h2>Admin Audit Logs</h2>
+        <div style="margin-bottom: 20px;">
+            <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+        </div>
         <p>Showing last 200 actions.</p>
 
         <div class="dashboard-grid" style="display:flex; justify-content:center;">

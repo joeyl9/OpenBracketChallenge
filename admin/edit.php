@@ -13,7 +13,7 @@ if ($main_closed && (!$s16_enabled || $s16_closed)) {
     echo '<div id="main"><div class="full">';
     echo '<h2>Edit User Bracket</h2>';
     echo '<p>All brackets are currently closed. Editing is not available.</p>';
-    echo '<a href="index.php" class="btn-outline">&larr; Back to Admin</a>';
+    echo '<a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>';
     echo '</div></div></div>';
     include('footer.php');
     echo '</body>
@@ -35,6 +35,9 @@ $stmt = $db->query($query);
 		<div class="full">
 			<form method="post" action="bracket.php">
 			<h2>Select a User</h2>
+            <div style="margin-bottom: 20px;">
+                <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+            </div>
 			<table>
 				<tr>
 					<td>

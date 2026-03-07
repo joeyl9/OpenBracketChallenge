@@ -11,7 +11,7 @@ if(!($teams = $stmt->fetch(PDO::FETCH_ASSOC))) {
             <h2>Tournament Not Initialized</h2>
             <p>You must initialize the bracket (load teams) before you can edit the master bracket.</p>
             <br>
-            <a href='index.php' class='btn' style='background:var(--accent-orange); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;'>Back to Dashboard</a>
+            <a href='index.php' class='btn-outline'>&larr; Back to Dashboard</a>
           </div></div>";
     include("../footer.php");
 	exit();
@@ -31,7 +31,7 @@ if(is_admin() && !isset($_SESSION['user_id'])) {
                 <p>The default Administrator account cannot create personal brackets.</p>
                 <p>Please create a separate user account to participate.</p>
                 <br>
-                <a href='index.php' class='btn' style='background:var(--accent-orange); color:white; padding:10px 20px; text-decoration:none; border-radius:5px;'>Back to Dashboard</a>
+                <a href='index.php' class='btn-outline'>&larr; Back to Dashboard</a>
               </div></div>";
         include("../footer.php");
         exit();
@@ -79,11 +79,14 @@ if($id == 0 && $meta['closed'] == 0) {
 
 <div id="main" style="max-width: 100%; box-sizing: border-box;">
 	<div class="full">
+		<h2 style="margin-top:0;"><?php echo $bracketName; ?></h2>
+        <div style="margin-bottom: 20px;">
+            <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+        </div>
 		<form method="post" name="bracket" class="bracket" id="bracket" action="update.php?id=<?php echo $id?>" style="width: 100%;">
 			<input type="hidden" name="id" value="<?php echo $id; ?>">
 
 			<div style="background: rgba(255,255,255,0.05); padding: 20px; color: var(--text-light); margin-bottom: 20px; border-bottom: 2px solid var(--accent-orange); border-radius: 8px;">
-				<h2 style="margin-top:0;"><?php echo $bracketName; ?></h2>
 				
                 <?php if($isLocked) { ?>
                 <div style="background: #ef4444; color: white; padding: 15px; border-radius: 6px; margin-bottom: 10px; font-weight: bold; text-align: center;">

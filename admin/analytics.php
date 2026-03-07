@@ -7,8 +7,8 @@ include("header.php");
 <div id="main">
     <div class="full">
         <h2>Tournament Analytics 📊</h2>
-        <div style="text-align:right; margin-bottom:20px;">
-            <a href="index.php" style="color:var(--text-muted); text-decoration:none;">&larr; Back to Dashboard</a>
+        <div style="margin-bottom: 20px;">
+            <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
         </div>
         
         <style>

@@ -104,6 +104,9 @@ if (isset($_GET['search_user']) && !empty($_GET['search_term'])) {
         </div>
 
         <h2>Admin User Management</h2>
+        <div style="margin-bottom: 20px;">
+            <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+        </div>
         <?php echo $message; ?>
 
         <div class="dashboard-grid">

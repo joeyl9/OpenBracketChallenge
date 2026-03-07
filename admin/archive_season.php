@@ -231,9 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div style="text-align:center; margin-top:30px;">
-             <a href="index.php" style="color:var(--text-muted); text-decoration:none; font-weight:bold; opacity:0.75; transition:opacity 0.2s;">
-                <i class="fa-solid fa-arrow-left"></i> Back to Admin Dashboard
-             </a>
+             <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
         </div>
     </div>
 </div>

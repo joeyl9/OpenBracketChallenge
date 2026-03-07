@@ -171,6 +171,10 @@ $existing = $checkStmt->fetch(PDO::FETCH_ASSOC);
 <div class="full">
 <div class="content-card" style="width:98%; margin:0 auto;">
 
+    <div style="margin-bottom: 15px;">
+        <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+    </div>
+
     <div class="sf-header">
         <h2><i class="fa-solid fa-basketball"></i> Initialize Bracket</h2>
         <p>Enter the 64 first-round teams. Seeds follow standard bracket order.</p>

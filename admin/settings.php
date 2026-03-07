@@ -260,6 +260,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div id="main">
     <div class="full">
         <h2>Tournament Settings</h2>
+        <div style="margin-bottom: 20px;">
+            <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+        </div>
         
         <?php if($msg) echo "<div class='success'>$msg</div>"; ?>
         <?php if($error) echo "<div class='error'>$error</div>"; ?>

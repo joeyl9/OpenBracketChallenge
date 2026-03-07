@@ -9,9 +9,12 @@ $stmt = $db->query($query);
 ?>
 	<div id="main">
 		<div class="full">
+			<h2>Who's Paid?</h2>
+            <div style="margin-bottom: 20px;">
+                <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+            </div>
 			<form method="post" action="post.php?action=paid">
 			<?php csrf_field(); ?>
-			<h2>Who's Paid?</h2>
 			<div class="table-container">
 			<table class="adminPaid" id="paidTable">
 					<tr class="paidHeader">

@@ -381,7 +381,10 @@ include('header.php');
 
 <div class="page-header">
     <h1><i class="fa-solid fa-palette" style="color:var(--accent-orange);"></i> Theme Manager</h1>
-    <button class="btn-custom btn-primary" onclick="openModal('create')"><i class="fa fa-plus"></i> New Theme</button>
+    <div>
+        <a href="index.php" class="btn-outline" style="margin-right:10px;">&larr; Back to Dashboard</a>
+        <button class="btn-custom btn-primary" onclick="openModal('create')"><i class="fa fa-plus"></i> New Theme</button>
+    </div>
 </div>
 
 <?php if ($error): ?>

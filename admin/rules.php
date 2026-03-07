@@ -13,6 +13,9 @@ $rules = $stmt->fetch(PDO::FETCH_NUM);
 			<form method="post" action="post.php?action=rules">
 			<?php csrf_field(); ?>
 			<h2>Rules</h2>
+            <div style="margin-bottom: 20px;">
+                <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+            </div>
 			<p>You may enter whatever rules you would like.  They will appear on the rules page exactly as you type them here.</p>
 			<p>I recommend at least including your submission deadline and your contact information.</p>
 			<div class="dashboard-card" style="padding:20px; align-items:flex-start;">

@@ -35,6 +35,9 @@ include("header.php");
 <div id="main">
     <div class="full">
         <h2>📢 System Broadcasts</h2>
+        <div style="margin-bottom: 20px;">
+            <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
+        </div>
 
         <!-- Add Form -->
         <div class="dashboard-card" style="padding:20px; border:1px solid var(--border-color); margin-bottom:30px;">

@@ -68,7 +68,7 @@ if (empty($completedGames)) {
     echo '<div id="main"><div class="full">';
     echo '<h2>Live Score Fetch</h2>';
     echo '<p>No completed tournament games found in live feed.</p>';
-    echo '<a href="index.php" class="btn-outline">&larr; Back to Admin</a>';
+    echo '<a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>';
     echo '</div></div></div>';
     include('footer.php');
     echo '</body>
@@ -284,7 +284,7 @@ if (!empty($log)) {
     echo '</div>';
 }
 
-echo '<p style="margin-top:1.5rem;"><a href="index.php" class="btn-outline">&larr; Back to Admin</a></p>';
+echo '<p style="margin-top:1.5rem;"><a href="index.php" class="btn-outline">&larr; Back to Dashboard</a></p>';
 echo '</div></div></div>';
 include('footer.php');
 echo '</body>
