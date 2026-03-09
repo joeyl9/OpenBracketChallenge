@@ -1,0 +1,79 @@
+<?php
+
+/*
+ * Add your DB config here!
+ * Rename this file to database.php to manually configure your site.
+ */
+$database = "bracket_db";
+$user = "username";
+$pass = "pw";
+$host = "localhost";
+/*
+ * Add a full URL to your site install, like:
+ * $tourneyURL = "http://tourney.example.com/";
+ * $tourneyURL = "http://example.com/tourney/";
+ */
+$tourneyURL = "";
+
+/*
+ * How many places do you want to have payout for in the final calculations?
+ * $maxScoreRanks = 3;   means that the top 3 winners payout or have a prize
+ */
+$maxScoreRanks = 3;
+
+
+/* **************** DO NOT EDIT BELOW THIS POINT **************** */
+
+/*
+ * The below data must appear in a valid release.  Do not edit.
+ */
+$mmm_vers = "ver 1.0.0";
+$mmm_info = "&copy;" . date('Y') . " OpenBracketChallenge | Orig: &copy;2007-2011 tourney project";
+$mmm_authors = "Current: OpenBracketChallenge | Originally based on work by Matt Felser, Brian Battaglia, John Holder, Robert Jailall";
+$dbschema_vers = "ver 1.0.0";
+
+error_reporting(E_ALL);
+
+
+// -------------------------------------------------------------
+// Database Connection Safety Logic
+// -------------------------------------------------------------
+
+// 1. Detect "Not Configured" State (Placeholders or Empty)
+// Checks if values match the Git-committed defaults or are missing.
+$is_placeholder = (
+    (isset($database) && $database === 'bracket_db') && 
+    (isset($user) && $user === 'username') && 
+    (isset($pass) && $pass === 'pw')
+);
+$is_empty = (empty($database) || empty($user) || empty($host));
+
+if ($is_placeholder || $is_empty) {
+    // If we are NOT in the installer, stop and show the Setup splash.
+    // If we ARE in the installer, we let it proceed so it can write the config.
+    if (!defined('INSTALLER_MODE')) {
+        require_once __DIR__ . '/../includes/setup_required.php';
+        exit();
+    }
+    // If Installer Mode, we return to let install.php continue (db_connected remains false)
+    return;
+}
+
+// 2. Wrap Connection in Try/Catch
+try {
+	$dsn = "mysql:host=$host;dbname=$database;charset=utf8mb4";
+	$options = [
+		PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+		PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+		PDO::ATTR_EMULATE_PREPARES => false,
+	];
+	$db = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+    // If installation is in progress, suppress fatal error so wizard can show "Connection Failed" message if needed
+    if(defined('INSTALLER_MODE')) return;
+    
+    // Otherwise, show safe "Service Unavailable" page
+    require_once __DIR__ . '/../includes/service_unavailable.php';
+	exit();
+}
+
