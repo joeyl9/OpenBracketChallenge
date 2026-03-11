@@ -1,4 +1,4 @@
--- Database Schema
+﻿-- Database Schema
 -- Version: 1.0.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -9,35 +9,35 @@ SET time_zone = "+00:00";
 -- Table: admin_logs
 DROP TABLE IF EXISTS `admin_logs`;
 CREATE TABLE `admin_logs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `admin_id` int(11) DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `admin_id` int DEFAULT NULL,
   `action_type` varchar(32) NOT NULL,
   `details` text,
   `ip_address` varchar(45) DEFAULT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `admin_id` (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: admin_users
 DROP TABLE IF EXISTS `admin_users`;
 CREATE TABLE `admin_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
   `role` enum('super','limited','pay') NOT NULL DEFAULT 'limited',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: badges
 DROP TABLE IF EXISTS `badges`;
 CREATE TABLE `badges` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `emoji` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -65,32 +65,32 @@ INSERT INTO `badges` (`id`, `name`, `emoji`, `description`, `color`) VALUES
 -- Table: best_scores
 DROP TABLE IF EXISTS `best_scores`;
 CREATE TABLE `best_scores` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL DEFAULT '',
   `score` double NOT NULL DEFAULT '0',
   `scoring_type` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`scoring_type`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: blog
 DROP TABLE IF EXISTS `blog`;
 CREATE TABLE `blog` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `title` tinytext NOT NULL,
   `subtitle` tinytext NOT NULL,
   `content` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: users
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -112,13 +112,13 @@ CREATE TABLE `users` (
 -- Table: brackets
 DROP TABLE IF EXISTS `brackets`;
 CREATE TABLE `brackets` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL DEFAULT '0',
   `person` text NOT NULL,
   `name` varchar(128) NOT NULL DEFAULT '',
   `email` text NOT NULL,
-  `tiebreaker` int(3) NOT NULL DEFAULT '0',
-  `paid` tinyint(1) NOT NULL DEFAULT '0' COMMENT '1=paid,0=unpaid,2=exempted',
+  `tiebreaker` int NOT NULL DEFAULT '0',
+  `paid` tinyint NOT NULL DEFAULT '0' COMMENT '1=paid,0=unpaid,2=exempted',
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'time bracket was submitted',
   `1` varchar(32) NOT NULL DEFAULT '',
   `2` varchar(32) NOT NULL DEFAULT '',
@@ -183,37 +183,37 @@ CREATE TABLE `brackets` (
   `61` varchar(32) NOT NULL DEFAULT '',
   `62` varchar(32) NOT NULL DEFAULT '',
   `63` varchar(32) NOT NULL DEFAULT '',
-  `eliminated` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Equals 1 when eliminated',
+  `eliminated` tinyint NOT NULL DEFAULT '0' COMMENT 'Equals 1 when eliminated',
   `avatar_url` varchar(255) DEFAULT NULL,
   `type` varchar(20) DEFAULT 'main',
-  `disabled` tinyint(1) DEFAULT '0',
+  `disabled` tinyint DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `idx_paid_type` (`paid`,`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: bracket_badges
 DROP TABLE IF EXISTS `bracket_badges`;
 CREATE TABLE `bracket_badges` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bracket_id` int(11) NOT NULL,
-  `badge_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bracket_id` int NOT NULL,
+  `badge_id` int NOT NULL,
   `awarded_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_badge` (`bracket_id`,`badge_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: broadcasts
 DROP TABLE IF EXISTS `broadcasts`;
 CREATE TABLE `broadcasts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `message` text COLLATE utf8mb4_unicode_ci,
   `type` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'info',
-  `active` tinyint(4) DEFAULT '1',
+  `active` tinyint DEFAULT '1',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -223,21 +223,21 @@ CREATE TABLE `broadcasts` (
 -- Table: comments
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bracket` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bracket` int NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `from` tinytext NOT NULL,
   `subject` tinytext NOT NULL,
   `content` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: end_games
 DROP TABLE IF EXISTS `end_games`;
 CREATE TABLE `end_games` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `49` varchar(32) DEFAULT NULL,
   `50` varchar(32) DEFAULT NULL,
   `51` varchar(32) DEFAULT NULL,
@@ -253,32 +253,32 @@ CREATE TABLE `end_games` (
   `61` varchar(32) DEFAULT NULL,
   `62` varchar(32) DEFAULT NULL,
   `63` varchar(32) DEFAULT NULL,
-  `round` int(11) DEFAULT NULL,
-  `eliminated` tinyint(1) NOT NULL DEFAULT '0',
+  `round` int DEFAULT NULL,
+  `eliminated` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_round_elim` (`round`,`eliminated`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: endgame_summary
 DROP TABLE IF EXISTS `endgame_summary`;
 CREATE TABLE `endgame_summary` (
-  `bracket_id` int(11) NOT NULL,
-  `rank` int(11) NOT NULL,
-  `num_paths` int(11) NOT NULL,
+  `bracket_id` int NOT NULL,
+  `rank` int NOT NULL,
+  `num_paths` int NOT NULL,
   `p_win` float DEFAULT 0,
   PRIMARY KEY (`bracket_id`, `rank`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: hall_of_fame
 DROP TABLE IF EXISTS `hall_of_fame`;
 CREATE TABLE `hall_of_fame` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bracket_id` int(11) NOT NULL,
-  `year` int(4) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bracket_id` int NOT NULL,
+  `year` int NOT NULL,
   `achievement` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT 'Champion',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -288,17 +288,17 @@ CREATE TABLE `hall_of_fame` (
 -- Table: historical_results
 DROP TABLE IF EXISTS `historical_results`;
 CREATE TABLE `historical_results` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bracket_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `year` int(4) NOT NULL,
+  `year` int NOT NULL,
   `tourney_type` varchar(20) NOT NULL DEFAULT 'main',
-  `rank` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
+  `rank` int NOT NULL,
+  `score` int NOT NULL,
   `earnings` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `chat_count` int(11) NOT NULL DEFAULT '0',
+  `chat_count` int NOT NULL DEFAULT '0',
   `champion_pick` varchar(64) DEFAULT NULL,
-  `games_correct` int(11) NOT NULL DEFAULT '0',
+  `games_correct` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `email` (`email`(250)),
   KEY `year` (`year`)
@@ -309,10 +309,10 @@ CREATE TABLE `historical_results` (
 -- Table: historical_badges
 DROP TABLE IF EXISTS `historical_badges`;
 CREATE TABLE `historical_badges` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `badge_id` int(11) NOT NULL,
-  `year` int(4) NOT NULL,
+  `badge_id` int NOT NULL,
+  `year` int NOT NULL,
   `tourney_type` varchar(20) NOT NULL DEFAULT 'main',
   `awarded_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -325,7 +325,7 @@ CREATE TABLE `historical_badges` (
 -- Table: master
 DROP TABLE IF EXISTS `master`;
 CREATE TABLE `master` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `1` varchar(32) NOT NULL DEFAULT '',
   `2` varchar(32) NOT NULL DEFAULT '',
   `3` varchar(32) NOT NULL DEFAULT '',
@@ -393,160 +393,160 @@ CREATE TABLE `master` (
   `type` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: meta
 DROP TABLE IF EXISTS `meta`;
 CREATE TABLE `meta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(64) NOT NULL,
   `subtitle` varchar(128) NOT NULL,
   `name` varchar(128) NOT NULL,
   `email` varchar(128) NOT NULL,
   `cost` double NOT NULL,
   `cut` double NOT NULL,
-  `cutType` int(1) NOT NULL COMMENT '1=percent, 0=dollars',
-  `closed` tinyint(1) NOT NULL COMMENT '1=submission is closed',
-  `sweet16` tinyint(1) NOT NULL COMMENT '1=sweet 16 has started',
+  `cutType` int NOT NULL COMMENT '1=percent, 0=dollars',
+  `closed` tinyint NOT NULL COMMENT '1=submission is closed',
+  `sweet16` tinyint NOT NULL COMMENT '1=sweet 16 has started',
   `rules` text NOT NULL,
-  `mail` int(1) NOT NULL,
-  `tiebreaker` int(3) DEFAULT NULL,
-  `sweet16Competition` tinyint(1) NOT NULL COMMENT '1=this is a sweet 16 tourney',
+  `mail` int NOT NULL,
+  `tiebreaker` int DEFAULT NULL,
+  `sweet16Competition` tinyint NOT NULL COMMENT '1=this is a sweet 16 tourney',
   `region1` varchar(64) NOT NULL,
   `region2` varchar(64) NOT NULL,
   `region3` varchar(64) NOT NULL,
   `region4` varchar(64) NOT NULL,
   `db_version` varchar(255) NOT NULL DEFAULT '0',
   `deadline` datetime DEFAULT NULL,
-  `use_live_scoring` tinyint(1) NOT NULL DEFAULT '0',
+  `use_live_scoring` tinyint NOT NULL DEFAULT '0',
   `payout_1` decimal(5,2) NOT NULL DEFAULT '60.00',
   `payout_2` decimal(5,2) NOT NULL DEFAULT '30.00',
   `payout_3` decimal(5,2) NOT NULL DEFAULT '10.00',
-  `refund_last` tinyint(1) NOT NULL DEFAULT '0',
-  `reg_mode` int(1) DEFAULT '0',
+  `refund_last` tinyint NOT NULL DEFAULT '0',
+  `reg_mode` int DEFAULT '0',
   `reg_password` varchar(255) DEFAULT '',
   `reg_token` varchar(255) DEFAULT '',
-  `max_brackets` int(11) NOT NULL DEFAULT '1',
+  `max_brackets` int NOT NULL DEFAULT '1',
   `sweet16_cost` DECIMAL(10,2) DEFAULT '0.00',
   `sweet16_cut` DECIMAL(10,2) DEFAULT '0.00',
-  `sweet16_cutType` TINYINT(1) DEFAULT '0',
+  `sweet16_cutType` tinyint DEFAULT '0',
   `sweet16_payout_1` INT DEFAULT '60',
   `sweet16_payout_2` INT DEFAULT '30',
   `sweet16_payout_3` INT DEFAULT '10',
   `sweet16_deadline` DATETIME DEFAULT NULL,
-  `sweet16_closed` TINYINT(1) DEFAULT '0',
-  `sweet16_reg_mode` TINYINT(1) DEFAULT '0',
+  `sweet16_closed` tinyint DEFAULT '0',
+  `sweet16_reg_mode` tinyint DEFAULT '0',
   `sweet16_reg_password` VARCHAR(255) DEFAULT '',
   `sweet16_reg_token` VARCHAR(255) DEFAULT '',
-  `sweet16_refund_last` TINYINT(1) DEFAULT '0',
-  `max_sweet16_brackets` int(11) NOT NULL DEFAULT '1',
+  `sweet16_refund_last` tinyint DEFAULT '0',
+  `max_sweet16_brackets` int NOT NULL DEFAULT '1',
   `qr_code_data` LONGBLOB,
   `qr_code_type` VARCHAR(50),
   `sweet16_qr_data` LONGBLOB,
   `sweet16_qr_type` VARCHAR(50),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: passwords
 DROP TABLE IF EXISTS `passwords`;
 CREATE TABLE `passwords` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `label` varchar(255) NOT NULL,
   `hash` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `label` (`label`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Used for user login validation';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Used for user login validation';
 
 -- --------------------------------------------------------
 
 -- Table: possible_scores
 DROP TABLE IF EXISTS `possible_scores`;
 CREATE TABLE `possible_scores` (
-  `outcome_id` int(11) DEFAULT NULL,
-  `bracket_id` int(11) DEFAULT NULL,
+  `outcome_id` int DEFAULT NULL,
+  `bracket_id` int DEFAULT NULL,
   `score` double DEFAULT NULL,
   `type` char(32) DEFAULT NULL,
-  `rank` int(11) DEFAULT NULL,
-  `eliminated` tinyint(1) NOT NULL DEFAULT '0',
+  `rank` int DEFAULT NULL,
+  `eliminated` tinyint NOT NULL DEFAULT '0',
   KEY `idx_outcome` (`outcome_id`),
   KEY `idx_bracket` (`bracket_id`),
   KEY `idx_eliminated` (`eliminated`),
   KEY `idx_calc_cover` (`type`,`rank`,`bracket_id`,`outcome_id`),
   KEY `idx_calc_elim` (`type`,`outcome_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: possible_scores_eliminated
 DROP TABLE IF EXISTS `possible_scores_eliminated`;
 CREATE TABLE `possible_scores_eliminated` (
-  `outcome_id` int(11) DEFAULT NULL,
-  `bracket_id` int(11) DEFAULT NULL,
+  `outcome_id` int DEFAULT NULL,
+  `bracket_id` int DEFAULT NULL,
   `score` double DEFAULT NULL,
   `type` char(32) DEFAULT NULL,
-  `rank` int(11) DEFAULT NULL,
-  `eliminated` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `rank` int DEFAULT NULL,
+  `eliminated` tinyint NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: probability_of_winning
 DROP TABLE IF EXISTS `probability_of_winning`;
 CREATE TABLE `probability_of_winning` (
-  `id` int(11) DEFAULT NULL,
-  `rank` int(11) DEFAULT NULL,
+  `id` int DEFAULT NULL,
+  `rank` int DEFAULT NULL,
   `probability_win` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: rank_history
 DROP TABLE IF EXISTS `rank_history`;
 CREATE TABLE `rank_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `bracket_id` int(11) NOT NULL,
-  `rank` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `bracket_id` int NOT NULL,
+  `rank` int NOT NULL,
+  `score` int NOT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `bracket_id` (`bracket_id`),
   KEY `timestamp` (`timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: rivals
 DROP TABLE IF EXISTS `rivals`;
 CREATE TABLE `rivals` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `rival_id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `rival_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: scores
 DROP TABLE IF EXISTS `scores`;
 CREATE TABLE `scores` (
-  `id` int(11) NOT NULL DEFAULT '0',
+  `id` int NOT NULL DEFAULT '0',
   `name` varchar(128) NOT NULL DEFAULT '',
   `score` double NOT NULL DEFAULT '0',
   `scoring_type` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`scoring_type`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 -- Table: scoring
 DROP TABLE IF EXISTS `scoring`;
 CREATE TABLE `scoring` (
-  `seed` int(11) NOT NULL DEFAULT '0',
+  `seed` int NOT NULL DEFAULT '0',
   `1` double DEFAULT NULL,
   `2` double DEFAULT NULL,
   `3` double DEFAULT NULL,
@@ -555,7 +555,7 @@ CREATE TABLE `scoring` (
   `6` double DEFAULT NULL,
   `type` char(255) DEFAULT NULL,
   KEY `system` (`type`,`seed`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `scoring` (`seed`, `1`, `2`, `3`, `4`, `5`, `6`, `type`) VALUES
 (2, 1, 2, 4, 8, 16, 32, 'geometric'),
@@ -616,7 +616,7 @@ CREATE TABLE `scoring_info` (
   `display_name` varchar(255) DEFAULT NULL,
   `description` blob,
   PRIMARY KEY (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `scoring_info` (`type`, `display_name`, `description`) VALUES
 ('standard', 'Standard Scoring', 0x5374616e646172642053636f72696e67),
@@ -627,7 +627,7 @@ INSERT INTO `scoring_info` (`type`, `display_name`, `description`) VALUES
 -- Table: themes
 DROP TABLE IF EXISTS `themes`;
 CREATE TABLE `themes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `theme_key` varchar(50) NOT NULL,
   `name` varchar(100) NOT NULL,
   `accent` varchar(20) NOT NULL,
@@ -638,7 +638,8 @@ CREATE TABLE `themes` (
   `group_name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `theme_key` (`theme_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `themes` (`theme_key`, `name`, `accent`, `header1`, `header2`, `bg1`, `bg2`, `group_name`) VALUES
 ('default', 'Default (Midnight)', '#f97316', '#0f172a', '#1e293b', '#0f172a', '#1e293b', 'System');
+

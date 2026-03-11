@@ -244,7 +244,8 @@ try {
             $stmt->execute($lParams);
         }
         
-        $db->prepare("UPDATE `meta` SET `tiebreaker`=:tiebreaker WHERE `id`=1")->execute([':tiebreaker' => $_POST['tiebreaker']]);
+        $tiebreaker = (isset($_POST['tiebreaker']) && $_POST['tiebreaker'] !== '') ? (int)$_POST['tiebreaker'] : null;
+        $db->prepare("UPDATE `meta` SET `tiebreaker`=:tiebreaker WHERE `id`=1")->execute([':tiebreaker' => $tiebreaker]);
         
     } else {
         // USER BRACKET (ID != 0)

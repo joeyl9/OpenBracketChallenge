@@ -40,8 +40,8 @@ $scoringDescriptions = "";
 $scoringTables = array();
 
 $scoringTypeNames = array();
-$scoringTypesQuery = "SELECT scoring_type as name, scoring_info.display_name, description ".
-	"FROM scores, scoring_info WHERE scores.scoring_type = scoring_info.type GROUP BY scoring_type ORDER BY display_name";
+$scoringTypesQuery = "SELECT scores.scoring_type as name, scoring_info.display_name, MAX(description) as description ".
+	"FROM scores JOIN scoring_info ON scores.scoring_type = scoring_info.type GROUP BY scores.scoring_type, scoring_info.display_name ORDER BY scoring_info.display_name";
 $stmt = $db->query($scoringTypesQuery);
 $scoringTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
