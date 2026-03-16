@@ -455,7 +455,7 @@ class CalcEngine {
                 }
                 
                 $firstUpdate = false;
-                $finishedGamesCondition .= "`".$i."` != '".$master_data[$i]."'";
+                $finishedGamesCondition .= "`".$i."` != " . $this->db->quote($master_data[$i]);
             }
         }
 
@@ -521,14 +521,14 @@ class CalcEngine {
                 // Build string backwards from current round
                 while (($peerGamePicks[$i] ?? null) != NULL) {
                     $fields .= ",`".$i."`";
-                    $values .= ",'" . $peerGamePicks[$i] . "'"; // Assume safe internal strings
+                    $values .= "," . $this->db->quote($peerGamePicks[$i]);
                     --$i;
                 }
                 
                 // Fill remaining from winnerData (previous rounds)
                 for ($k=$i; $k>=49; --$k) {
                     $fields .= ",`".$k."`";
-                    $values .= ",'" . ($winnerData[$k] ?? null) . "'";
+                    $values .= "," . $this->db->quote($winnerData[$k] ?? null);
                 }
                 
                 $sql = "INSERT INTO `end_games` (`round` ".$fields.") VALUES ( ".$round.$values.") ";
