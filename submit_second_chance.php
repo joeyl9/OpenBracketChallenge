@@ -194,13 +194,13 @@ for($i=49; $i<=63; $i++) {
                 <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
                 <!-- Game 49 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(49, 'input_game49', 57, 0, this)" data-value="<?php echo $winners[33]; ?>"><?php echo teamStr($winners[33], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(49, 'input_game49', 57, 0, this)" data-value="<?php echo $winners[34]; ?>"><?php echo teamStr($winners[34], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(49, 'input_game49', 57, 0, this)" data-value="<?php echo htmlspecialchars($winners[33], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[33], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(49, 'input_game49', 57, 0, this)" data-value="<?php echo htmlspecialchars($winners[34], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[34], $seedMap); ?></div>
                 </div>
                 <!-- Game 50 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(50, 'input_game50', 57, 1, this)" data-value="<?php echo $winners[35]; ?>"><?php echo teamStr($winners[35], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(50, 'input_game50', 57, 1, this)" data-value="<?php echo $winners[36]; ?>"><?php echo teamStr($winners[36], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(50, 'input_game50', 57, 1, this)" data-value="<?php echo htmlspecialchars($winners[35], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[35], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(50, 'input_game50', 57, 1, this)" data-value="<?php echo htmlspecialchars($winners[36], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[36], $seedMap); ?></div>
                 </div>
             </div>
             <!-- Elite 8 -->
@@ -221,13 +221,13 @@ for($i=49; $i<=63; $i++) {
                 <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
                 <!-- Game 51 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(51, 'input_game51', 58, 0, this)" data-value="<?php echo $winners[37]; ?>"><?php echo teamStr($winners[37], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(51, 'input_game51', 58, 0, this)" data-value="<?php echo $winners[38]; ?>"><?php echo teamStr($winners[38], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(51, 'input_game51', 58, 0, this)" data-value="<?php echo htmlspecialchars($winners[37], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[37], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(51, 'input_game51', 58, 0, this)" data-value="<?php echo htmlspecialchars($winners[38], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[38], $seedMap); ?></div>
                 </div>
                 <!-- Game 52 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(52, 'input_game52', 58, 1, this)" data-value="<?php echo $winners[39]; ?>"><?php echo teamStr($winners[39], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(52, 'input_game52', 58, 1, this)" data-value="<?php echo $winners[40]; ?>"><?php echo teamStr($winners[40], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(52, 'input_game52', 58, 1, this)" data-value="<?php echo htmlspecialchars($winners[39], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[39], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(52, 'input_game52', 58, 1, this)" data-value="<?php echo htmlspecialchars($winners[40], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[40], $seedMap); ?></div>
                 </div>
             </div>
             <!-- Elite 8 -->
@@ -289,13 +289,13 @@ for($i=49; $i<=63; $i++) {
                 <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
                 <!-- Game 53 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(53, 'input_game53', 59, 0, this)" data-value="<?php echo $winners[41]; ?>"><?php echo teamStr($winners[41], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(53, 'input_game53', 59, 0, this)" data-value="<?php echo $winners[42]; ?>"><?php echo teamStr($winners[42], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(53, 'input_game53', 59, 0, this)" data-value="<?php echo htmlspecialchars($winners[41], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[41], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(53, 'input_game53', 59, 0, this)" data-value="<?php echo htmlspecialchars($winners[42], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[42], $seedMap); ?></div>
                 </div>
                 <!-- Game 54 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(54, 'input_game54', 59, 1, this)" data-value="<?php echo $winners[43]; ?>"><?php echo teamStr($winners[43], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(54, 'input_game54', 59, 1, this)" data-value="<?php echo $winners[44]; ?>"><?php echo teamStr($winners[44], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(54, 'input_game54', 59, 1, this)" data-value="<?php echo htmlspecialchars($winners[43], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[43], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(54, 'input_game54', 59, 1, this)" data-value="<?php echo htmlspecialchars($winners[44], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[44], $seedMap); ?></div>
                 </div>
             </div>
             
@@ -317,13 +317,13 @@ for($i=49; $i<=63; $i++) {
                 <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
                 <!-- Game 55 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(55, 'input_game55', 60, 0, this)" data-value="<?php echo $winners[45]; ?>"><?php echo teamStr($winners[45], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(55, 'input_game55', 60, 0, this)" data-value="<?php echo $winners[46]; ?>"><?php echo teamStr($winners[46], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(55, 'input_game55', 60, 0, this)" data-value="<?php echo htmlspecialchars($winners[45], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[45], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(55, 'input_game55', 60, 0, this)" data-value="<?php echo htmlspecialchars($winners[46], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[46], $seedMap); ?></div>
                 </div>
                 <!-- Game 56 -->
                 <div class="matchup">
-                     <div class="team" onclick="pickWinner(56, 'input_game56', 60, 1, this)" data-value="<?php echo $winners[47]; ?>"><?php echo teamStr($winners[47], $seedMap); ?></div>
-                     <div class="team" onclick="pickWinner(56, 'input_game56', 60, 1, this)" data-value="<?php echo $winners[48]; ?>"><?php echo teamStr($winners[48], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(56, 'input_game56', 60, 1, this)" data-value="<?php echo htmlspecialchars($winners[47], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[47], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(56, 'input_game56', 60, 1, this)" data-value="<?php echo htmlspecialchars($winners[48], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[48], $seedMap); ?></div>
                 </div>
             </div>
             

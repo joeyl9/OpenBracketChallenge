@@ -318,8 +318,8 @@ function renderAdminRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games,
 		$nextGame = 32 + ceil($gId/2);
 		$nextSlot = ($gId % 2 == 1) ? 0 : 1; $t1_safe = htmlspecialchars($t1_name, ENT_QUOTES, 'UTF-8'); $t2_safe = htmlspecialchars($t2_name, ENT_QUOTES, 'UTF-8'); 
 		echo "<div class='matchup' id='matchup_$gId'>
-				<div class='team' data-value='$t1_name' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>$t1_name</div>
-				<div class='team' data-value='$t2_name' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>$t2_name</div>
+				<div class='team' data-value='$t1_safe' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>$t1_name</div>
+				<div class='team' data-value='$t2_safe' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>$t2_name</div>
 			  </div>";
 	}
 	echo "</div>";
