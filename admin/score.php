@@ -86,7 +86,7 @@ function run_scoring($db) {
     $metaTiebreaker = (int)$metaStmt->fetchColumn();
 
     // Only snapshot if we haven't done it recently (e.g. within 1 Hour)
-    $check = $db->query("SELECT id FROM rank_history WHERE timestamp > DATE_SUB(NOW(), INTERVAL 1 HOUR) LIMIT 1");
+    $check = $db->query("SELECT id FROM rank_history WHERE `timestamp` > DATE_SUB(NOW(), INTERVAL 1 HOUR) LIMIT 1");
     if (!$check->fetch()) {
         // Calculate current ranks from existing SCORES table before we wipe it
         // Logic similar to dashboard: Score DESC, Tiebreaker Diff ASC
@@ -105,7 +105,7 @@ function run_scoring($db) {
         $prev_diff = -1;
         $rank_counter = 1;
         
-        $historySql = "INSERT INTO rank_history (bracket_id, rank, score, timestamp) VALUES ";
+        $historySql = "INSERT INTO rank_history (bracket_id, `rank`, score, `timestamp`) VALUES ";
         $historyParams = [];
         $values = [];
         
