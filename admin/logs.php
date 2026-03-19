@@ -11,7 +11,7 @@ $query = "SELECT l.*, COALESCE(a.username, uu.name) AS username
           FROM admin_logs l
           LEFT JOIN admin_users a  ON l.admin_id = a.id AND l.details LIKE '%[break_glass_admin:%'
           LEFT JOIN users      uu ON l.admin_id = uu.id AND l.details LIKE '%[unified_user:%'
-          ORDER BY l.timestamp DESC
+          ORDER BY l.`timestamp` DESC
           LIMIT 200";
 
 $logs = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);

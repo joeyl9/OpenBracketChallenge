@@ -335,7 +335,7 @@ class CalcEngine {
         // We only consider a bracket 'alive' if it has at least one mathematical path 
         // to finish in 1st, 2nd, or 3rd place (rank <= $limit).
         
-        $query = "SELECT b.id FROM `brackets` b,`possible_scores` p where p.bracket_id = b.id and p.rank <= $limit and p.type='path_to_victory' group by b.id";
+        $query = "SELECT b.id FROM `brackets` b,`possible_scores` p where p.bracket_id = b.id and p.`rank` <= $limit and p.`type`='path_to_victory' group by b.id";
         $stmt = $this->safeExecute($query, [], 'CheckAlive');
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -659,7 +659,7 @@ class CalcEngine {
             return $b['s'] <=> $a['s'];
         });
         
-        $sql = "INSERT INTO possible_scores (outcome_id, bracket_id, rank, score, type) VALUES ";
+        $sql = "INSERT INTO possible_scores (outcome_id, bracket_id, `rank`, score, type) VALUES ";
         $params = [];
         $chunks = [];
         
@@ -706,7 +706,7 @@ class CalcEngine {
                 JOIN brackets b ON p.bracket_id = b.id 
                 JOIN end_games e ON e.id = p.outcome_id 
                 WHERE e.eliminated = 0 AND e.round = '7' AND p.type = 'path_to_victory' 
-                AND p.rank = :rank AND b.type = :bType";
+                AND p.`rank` = :rank AND b.type = :bType";
         
         $stmt = $this->safeExecute($sql, [':rank' => $rank, ':bType' => $bracketType], 'SelectProbsSource');
         
@@ -767,7 +767,7 @@ class CalcEngine {
         }
         
         // Aggregate and Insert (Buffered)
-        $bufferSql = "INSERT INTO probability_of_winning (id, rank, probability_win) VALUES ";
+        $bufferSql = "INSERT INTO probability_of_winning (id, `rank`, probability_win) VALUES ";
         $bufferParams = [];
         $bufferChunks = [];
         

@@ -28,7 +28,7 @@ if ($user_id) {
     // Fetch All Historical Data
     // Check if tourney_type exists (graceful fallback if schema not updated yet)
     try {
-        $stmt = $db->query("SELECT * FROM historical_results ORDER BY year DESC, rank ASC");
+        $stmt = $db->query("SELECT * FROM historical_results ORDER BY year DESC, `rank` ASC");
         $all_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch(Exception $e) {
         $all_history = []; // Schema mismatch, likely need migration

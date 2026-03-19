@@ -62,7 +62,7 @@ function drawEndGames( $pageMode, $id, $rank, $endgameIds, $db )
 		{ 
 			if( $pageMode == "view_all" )
 			{
-				$bracket_query = "select count(*) num_paths from possible_scores p where rank='".$rank."' and p.`type`='path_to_victory'";
+				$bracket_query = "select count(*) num_paths from possible_scores p where `rank`='".$rank."' and p.`type`='path_to_victory'";
 				$stmt = $db->query($bracket_query);
 				$bracket_data = $stmt->fetch(PDO::FETCH_ASSOC);
 			}
@@ -77,7 +77,7 @@ function drawEndGames( $pageMode, $id, $rank, $endgameIds, $db )
 				$prob_data = $stmt->fetch(PDO::FETCH_ASSOC);
 				$pBracketWin = $prob_data['probability_win'];
 				
-				$bracket_query = "select name, count(*) num_paths, id from brackets b, possible_scores p where b.id = p.bracket_id and id ='".$id."' and rank='".$rank."' and p.`type`='path_to_victory' group by b.name";
+				$bracket_query = "select name, count(*) num_paths, id from brackets b, possible_scores p where b.id = p.bracket_id and id ='".$id."' and `rank`='".$rank."' and p.`type`='path_to_victory' group by b.name";
 				$stmt = $db->query($bracket_query);
 				$bracket_data = $stmt->fetch(PDO::FETCH_ASSOC);
 			}
@@ -138,7 +138,7 @@ function drawEndGames( $pageMode, $id, $rank, $endgameIds, $db )
 					$end_game_query = 
 						"select b.*, e.id eid, score, name, e.`49` as g49, e.`50` as g50, e.`51` as g51, e.`52` as g52, e.`53` as g53, e.`54` as g54, e.`55` as g55, e.`56` as g56, e.`57` as g57, e.`58` as g58, e.`59` as g59, e.`60` as g60, e.`61` as g61, e.`62` as g62, e.`63` as g63 ".
 						"from possible_scores p, brackets b, end_games e ".
-						"where e.eliminated = false and p.bracket_id = b.id and e.id = outcome_id and e.round='7'  and p.`type`='path_to_victory' and rank=".$rank.
+						"where e.eliminated = false and p.bracket_id = b.id and e.id = outcome_id and e.round='7'  and p.`type`='path_to_victory' and `rank`=".$rank.
 						" order by `name`, e.`63`,e.`62`,e.`61`,e.`60`,e.`59`,e.`58`,e.`57`,e.`56`,e.`55`,e.`54`,e.`53`,e.`52`,e.`51`,e.`50`,e.`49`, score";
 				
                     // DEBUG
@@ -158,7 +158,7 @@ function drawEndGames( $pageMode, $id, $rank, $endgameIds, $db )
 					$end_game_query = 
 						"select b.*, e.id eid, score, name, e.`49` as g49, e.`50` as g50, e.`51` as g51, e.`52` as g52, e.`53` as g53, e.`54` as g54, e.`55` as g55, e.`56` as g56, e.`57` as g57, e.`58` as g58, e.`59` as g59, e.`60` as g60, e.`61` as g61, e.`62` as g62, e.`63` as g63 ".
 						"from possible_scores p, brackets b, end_games e ".
-						"where p.bracket_id = b.id and e.id = outcome_id and p.`type`='path_to_victory' and rank=".$rank." and outcome_id in ".$endgameList.
+						"where p.bracket_id = b.id and e.id = outcome_id and p.`type`='path_to_victory' and `rank`=".$rank." and outcome_id in ".$endgameList.
 						" order by `name`, e.`63`,e.`62`,e.`61`,e.`60`,e.`59`,e.`58`,e.`57`,e.`56`,e.`55`,e.`54`,e.`53`,e.`52`,e.`51`,e.`50`,e.`49`, score";						
 				}
 				else
@@ -166,7 +166,7 @@ function drawEndGames( $pageMode, $id, $rank, $endgameIds, $db )
 					$end_game_query = 
 						"select b.*, e.id eid, score, name, e.`49` as g49, e.`50` as g50, e.`51` as g51, e.`52` as g52, e.`53` as g53, e.`54` as g54, e.`55` as g55, e.`56` as g56, e.`57` as g57, e.`58` as g58, e.`59` as g59, e.`60` as g60, e.`61` as g61, e.`62` as g62, e.`63` as g63 ".
 						"from possible_scores p, brackets b, end_games e ".
-						"where e.eliminated = false and b.id='".$id."'  and p.`type`='path_to_victory'and p.bracket_id = b.id and e.id = outcome_id and e.round='7' and rank=".$rank.
+						"where e.eliminated = false and b.id='".$id."'  and p.`type`='path_to_victory'and p.bracket_id = b.id and e.id = outcome_id and e.round='7' and `rank`=".$rank.
 						" order by e.`63`,e.`62`,e.`61`,e.`60`,e.`59`,e.`58`,e.`57`,e.`56`,e.`55`,e.`54`,e.`53`,e.`52`,e.`51`,e.`50`,e.`49`";
 				}
 				

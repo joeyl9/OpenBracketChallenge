@@ -44,7 +44,7 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
                   es.num_paths
                 FROM endgame_summary es
                 JOIN brackets b ON b.id = es.bracket_id
-                WHERE es.rank=:rank2
+                WHERE es.`rank`=:rank2
                   AND b.type=:view
                   AND b.paid<>'0'
                 GROUP BY b.id, b.name, b.email";

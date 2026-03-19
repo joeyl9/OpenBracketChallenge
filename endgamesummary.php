@@ -60,7 +60,7 @@ include('endgamesummary_view_module.php');
 				
 				<?php
 					// Fix: Calculate lowest rank SPECIFIC to the current view (Main vs Sweet 16)
-					$last_place_query = "SELECT max(p.rank) rank FROM `possible_scores` p
+					$last_place_query = "SELECT max(p.`rank`) `rank` FROM `possible_scores` p
                                          JOIN `brackets` b ON p.bracket_id = b.id
                                          JOIN `end_games` e ON e.id = p.outcome_id
                                          WHERE p.`type`='path_to_victory' AND b.type = ? AND e.eliminated = false";
@@ -87,9 +87,9 @@ include('endgamesummary_view_module.php');
 					if ($lowestRank > 0 && $lowestRank > $maxScoreRanks) {
 					    createSummaryTable($db, $lowestRank, "Last Place", $viewAll, $summary_data['num_scenarios'], $sort, $view); 
 					} else if ($lowestRank > 0 && $summary_data['num_scenarios'] > 0 && $maxScoreRanks >= $lowestRank) {
-					    // If we have fewer players than maxScoreRanks (e.g. 3 players, max is 5), 
+					    // If we have fewer players than maxScoreRanks
 					    // and the lowest rank was already shown above... we technically don't need a DUPLICATE Last Place card.
-					    // However, the user explicitly wants to see "LAST PLACE" formatting.
+					    // Even though unlikely we'll still generate it
 					    createSummaryTable($db, $lowestRank, "Last Place", $viewAll, $summary_data['num_scenarios'], $sort, $view); 
 					} else {
 					    createSummaryTable($db, $lowestRank, "Last Place", $viewAll, $summary_data['num_scenarios'], $sort, $view); 

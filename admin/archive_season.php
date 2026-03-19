@@ -126,7 +126,7 @@ function archiveSegment($db, $year, $type, $params) {
             }
         }
 
-        $ins = $db->prepare("INSERT INTO historical_results (email, bracket_name, year, tourney_type, rank, score, earnings, chat_count, champion_pick, games_correct) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $ins = $db->prepare("INSERT INTO historical_results (email, bracket_name, year, tourney_type, `rank`, score, earnings, chat_count, champion_pick, games_correct) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         try {
             $ins->execute([
                 $row['email'], $row['name'], $year, $type,

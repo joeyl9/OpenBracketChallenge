@@ -340,16 +340,16 @@ try {
 
         $db->exec("TRUNCATE TABLE endgame_summary");
         
-        $cacheSql = "INSERT INTO endgame_summary (bracket_id, rank, num_paths, p_win)
+        $cacheSql = "INSERT INTO endgame_summary (bracket_id, `rank`, num_paths, p_win)
                 SELECT 
                     ps.bracket_id, 
-                    ps.rank, 
+                    ps.`rank`, 
                     COUNT(*) as num_paths,
                     COALESCE(pow.probability_win, 0) as p_win
                 FROM possible_scores ps
-                LEFT JOIN probability_of_winning pow ON pow.id = ps.bracket_id AND pow.rank = ps.rank
+                LEFT JOIN probability_of_winning pow ON pow.id = ps.bracket_id AND pow.`rank` = ps.`rank`
                 WHERE ps.type='path_to_victory' AND ps.eliminated=0
-                GROUP BY ps.bracket_id, ps.rank";
+                GROUP BY ps.bracket_id, ps.`rank`";
         $db->exec($cacheSql);
     } else {
         streamStatus("Skipping deep calculations", "Not needed until Elite 8 (Games Left: $gamesLeft)");

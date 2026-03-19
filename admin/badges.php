@@ -218,7 +218,7 @@ class BadgeManager {
         $year = date("Y"); // or from meta settings
         $prevYear = $year - 1;
         
-        $hfStmt = $this->db->prepare("SELECT id FROM historical_results WHERE email = ? AND year = ? AND rank = 1");
+        $hfStmt = $this->db->prepare("SELECT id FROM historical_results WHERE email = ? AND year = ? AND `rank` = 1");
         $hfStmt->execute([$email, $prevYear]);
         if($hfStmt->fetch()) {
             $this->grant($bracketId, 'Back-to-Back');
@@ -235,7 +235,7 @@ class BadgeManager {
         }
         
         // Money Bags (Top 3 in 3+ Seasons)
-        $top3Stmt = $this->db->prepare("SELECT COUNT(*) FROM historical_results WHERE email = ? AND rank <= 3");
+        $top3Stmt = $this->db->prepare("SELECT COUNT(*) FROM historical_results WHERE email = ? AND `rank` <= 3");
         $top3Stmt->execute([$email]);
         $top3Count = $top3Stmt->fetchColumn();
         

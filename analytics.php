@@ -5,11 +5,11 @@ include("header.php");
 
 // 1. Calculate Movers
 // Get Latest Timestamp
-$stmt = $db->query("SELECT MAX(timestamp) FROM rank_history");
+$stmt = $db->query("SELECT MAX(`timestamp`) FROM rank_history");
 $latest_time = $stmt->fetchColumn();
 
 // Get Previous Timestamp (e.g. > 12 hours ago)
-$stmt = $db->prepare("SELECT MAX(timestamp) FROM rank_history WHERE timestamp < DATE_SUB(?, INTERVAL 12 HOUR)");
+$stmt = $db->prepare("SELECT MAX(`timestamp`) FROM rank_history WHERE `timestamp` < DATE_SUB(?, INTERVAL 12 HOUR)");
 $stmt->execute([$latest_time]);
 $prev_time = $stmt->fetchColumn();
 
@@ -20,13 +20,13 @@ if ($latest_time && $prev_time) {
                 b.name, 
                 b.avatar_url,
                 b.person,
-                curr.rank as current_rank, 
-                prev.rank as prev_rank, 
-                (prev.rank - curr.rank) as movement 
+                curr.`rank` as current_rank, 
+                prev.`rank` as prev_rank, 
+                (prev.`rank` - curr.`rank`) as movement 
             FROM rank_history curr
             JOIN rank_history prev ON curr.bracket_id = prev.bracket_id
             JOIN brackets b ON curr.bracket_id = b.id
-            WHERE curr.timestamp = ? AND prev.timestamp = ?
+            WHERE curr.`timestamp` = ? AND prev.`timestamp` = ?
             ORDER BY movement DESC
             LIMIT 5";
     $stmt = $db->prepare($sql);
