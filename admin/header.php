@@ -173,9 +173,10 @@ $meta = $stmt->fetch(PDO::FETCH_ASSOC);
             license_key: 'gpl',
             promotion: false,
             branding: false,
-            plugins: 'lists link table code wordcount',
-            toolbar: 'undo redo | blocks | bold italic | bullist numlist | link | table | code',
+            plugins: 'lists link table code wordcount accordion advlist anchor autolink autoresize autosave charmap codesample directionality emoticons fullscreen help image importcss insertdatetime media nonbreaking pagebreak preview quickbars save searchreplace visualblocks visualchars',
+            toolbar: 'undo redo | blocks | bold italic | bullist numlist | advlist | link image media | table | codesample | charmap emoticons | anchor insertdatetime | searchreplace | visualblocks visualchars | directionality | fullscreen preview | save | help | code wordcount',
             menubar: false,
+            min_height: 400,
             
             // Theme Integration
             skin: 'oxide-dark', // Base Dark Theme
