@@ -395,17 +395,54 @@ function pickWinner(gameId, inputId, nextGameId, nextSlotIndex, element) {
 		var nextSlotId = 'slot_' + nextGameId + '_' + nextSlotIndex;
 		var nextSlot = document.getElementById(nextSlotId);
 		if(nextSlot) {
+			var oldValue = nextSlot.getAttribute('data-value');
+			if(oldValue && oldValue !== teamValue) {
+				clearDownstream(nextGameId, nextSlotIndex, oldValue);
+			}
 			nextSlot.innerHTML = teamNameHTML; // Copy HTML (with seed span)
 			nextSlot.setAttribute('data-value', teamValue);
-            
-            // Clear the hidden input for the next game to invalidate old onward selections
-            var nextInputId = 'input_game' + nextGameId;
-            document.getElementById(nextInputId).value = ""; 
 		}
 	} else {
 		// Champion
 		document.getElementById('champion_display').innerHTML = teamNameHTML;
 	}
+}
+
+function clearDownstream(gameId, slotIndex, cascadedValue) {
+    var slotEl = document.getElementById('slot_' + gameId + '_' + slotIndex);
+    if (!slotEl) return;
+
+    var oldValue = cascadedValue || slotEl.getAttribute('data-value');
+    if (!oldValue) return;
+
+    var inputEl = document.getElementById('input_game' + gameId);
+    if (!inputEl || inputEl.value !== oldValue) return;
+
+    inputEl.value = '';
+
+    var onClickAttr = slotEl.getAttribute('onclick');
+
+    slotEl.innerHTML = '&nbsp;';
+    slotEl.removeAttribute('data-value');
+    slotEl.classList.remove('selected');
+
+    if (onClickAttr) {
+        var fullMatch = onClickAttr.match(/pickWinner[^(]*\(([^)]+)\)/);
+        if (fullMatch) {
+            var args = fullMatch[1].split(',').map(function(s){ return s.trim().replace(/['"]/g,''); });
+            var nextGameId = args[2] !== 'null' ? parseInt(args[2]) : null;
+            var nextSlotIdx = args[3] !== 'null' ? parseInt(args[3]) : null;
+
+            if (nextGameId === null) {
+                document.getElementById('champion_display').innerHTML = '?';
+            } else {
+                var nextSlotEl = document.getElementById('slot_' + nextGameId + '_' + nextSlotIdx);
+                if (nextSlotEl && nextSlotEl.getAttribute('data-value') === oldValue) {
+                    clearDownstream(nextGameId, nextSlotIdx, oldValue);
+                }
+            }
+        }
+    }
 }
 </script>
 
