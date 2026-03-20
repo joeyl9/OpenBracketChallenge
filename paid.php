@@ -23,10 +23,15 @@ function renderPaymentCard($rows, $title, $icon, $colorClass, $isGrid = false) {
     echo '<span style="font-size: 1.2rem;">'.$icon.'</span> '.$title;
     echo '</h3>';
     echo '<span style="background: rgba(0,0,0,0.3); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; color: var(--text-light);">'.$count.'</span>';
-    echo '</div>'; // End Header
+    echo '</div>';    // End Header
     
-
-    $gridStyle = ($isGrid && $count > 0) ? "display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:10px; padding:15px;" : "padding:0; display:flex; align-items:center; justify-content:center; min-height:100px;";
+    if ($count == 0) {
+        $gridStyle = "padding:0; display:flex; align-items:center; justify-content:center; min-height:100px;";
+    } else if ($isGrid) {
+        $gridStyle = "display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:10px; padding:15px;";
+    } else {
+        $gridStyle = "display:block; padding:0;";
+    }
     
     echo '<div class="custom-scrollbar" style="'.$gridStyle.' max-height: 600px; overflow-y: auto;">';
     
@@ -255,7 +260,7 @@ if(!($closed = $stmt->fetch(PDO::FETCH_NUM))) {
         
         <!-- Unpaid Column -->
         <div style="min-width: 0;">
-            <?php renderPaymentCard($unpaid_rows, "Unpaid", "<i class='fa-solid fa-hourglass-half'></i>", "red"); ?>
+            <?php renderPaymentCard($unpaid_rows, "Unpaid", "<i class='fa-solid fa-hourglass-half'></i>", "red", true); ?>
         </div>
         
         <!-- Paid Column -->
@@ -265,7 +270,7 @@ if(!($closed = $stmt->fetch(PDO::FETCH_NUM))) {
         
         <!-- Exempt Column -->
         <div style="min-width: 0;">
-            <?php renderPaymentCard($exempt_rows, "Exempt", "<i class='fa-solid fa-shield-halved'></i>", "blue"); ?>
+            <?php renderPaymentCard($exempt_rows, "Exempt", "<i class='fa-solid fa-shield-halved'></i>", "blue", true); ?>
         </div>
         
     </div>
