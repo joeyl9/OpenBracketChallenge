@@ -32,17 +32,17 @@ function drawScoringTable( $db, $winners_data, $custompoints, $seedMap,  $roundS
 
 		echo "<div id='tab-round-".$roundNum."' class='round-tab' style='display:none;'>
         <div style='margin-bottom:30px; width:100%;'>
-			<div class='table-container'>
+			<div class='table-container' style='overflow-x:auto;'>
 		<table class='scoredetail' style='width:100%; border-collapse:collapse; background:transparent;'>
 		<thead>
 		<tr class='tableheader' style='border-bottom:2px solid var(--border-color); color:var(--text-light);'>
-            <th style='padding:15px; text-align:left; font-weight:bold; color:var(--accent-orange); font-size:1.1em;'>Bracket</th>
-            <th style='padding:15px; text-align:center; color:var(--accent-orange); font-size:1.1em;'>T</th>
-            <th style='padding:15px; text-align:center; color:var(--accent-orange); font-size:1.1em;'>R".$roundNum."</th>
-            <th style='padding:15px; text-align:center; color:var(--accent-orange); font-size:1.1em;'>#</th>";
+            <th style='padding:8px 10px; text-align:left; font-weight:bold; color:var(--accent-orange); font-size:0.95em; width:100px;'>Bracket</th>
+            <th style='padding:8px 10px; text-align:center; color:var(--accent-orange); font-size:0.95em; width:40px;'>T</th>
+            <th style='padding:8px 10px; text-align:center; color:var(--accent-orange); font-size:0.95em; width:40px;'>R".$roundNum."</th>
+            <th style='padding:8px 10px; text-align:center; color:var(--accent-orange); font-size:0.95em; width:40px;'>#</th>";
 		for( $i = 0; $i < $numWinners; $i++ )
 		{
-			echo "<th style='padding:12px; text-align:center; font-size:0.9em; color:var(--text-muted); font-weight:normal;' onmouseover=\"showTeam( event, ".$winnerListForRound[$i][2].");\" onmouseout='clearTeam();'>"
+			echo "<th style='padding:6px 4px; text-align:center; font-size:0.8em; color:var(--text-muted); font-weight:normal;' onmouseover=\"showTeam( event, ".$winnerListForRound[$i][2].");\" onmouseout='clearTeam();'>"
 				.$winnerListForRound[$i][1]."<br>".$winnerListForRound[$i][0]."</th>";
 		}
 		echo "</tr></thead><tbody>";
@@ -87,11 +87,11 @@ function drawScoringTable( $db, $winners_data, $custompoints, $seedMap,  $roundS
 			// Simply allow anyone who is logged in to see the user name
 			if (isset($_SESSION['useremail']) == true)
 			{
-				echo "<td style='padding:15px; border-bottom:1px solid rgba(255,255,255,0.02);'><a href='view.php?id=".$bracket['id']."' style='color:var(--text-light); text-decoration:none; font-weight:bold; font-size:1.1em;'>".$rank.". ".h(stripslashes($bracket['name']))."</a>" . " <span style='font-size:0.9em; color:var(--text-muted);'>(" . h(stripslashes($bracket['person'])) . ")</span>";
+				echo "<td style='padding:8px 10px; width:100px; border-bottom:1px solid rgba(255,255,255,0.02);'><a href='view.php?id=".$bracket['id']."' style='color:var(--text-light); text-decoration:none; font-weight:bold; font-size:0.95em;'>".$rank.". ".h(stripslashes($bracket['name']))."</a>" . " <span style='font-size:0.9em; color:var(--text-muted);'>(" . h(stripslashes($bracket['person'])) . ")</span>";
 			}
 			else
 			{
-				echo "<td style='padding:15px; border-bottom:1px solid rgba(255,255,255,0.02);'><a href='view.php?id=".$bracket['id']."' style='color:var(--text-light); text-decoration:none; font-weight:bold; font-size:1.1em;'>".$rank.". ".h(stripslashes($bracket['name']))."</a>";
+				echo "<td style='padding:8px 10px; width:100px; border-bottom:1px solid rgba(255,255,255,0.02);'><a href='view.php?id=".$bracket['id']."' style='color:var(--text-light); text-decoration:none; font-weight:bold; font-size:0.95em;'>".$rank.". ".h(stripslashes($bracket['name']))."</a>";
 			}
 			
 			
@@ -126,21 +126,19 @@ function drawScoringTable( $db, $winners_data, $custompoints, $seedMap,  $roundS
 			}
             $totalEarnedForRound = $roundScore; // Alias if needed downstream
 
-			echo "</td><td style='padding:15px; text-align:center; color:var(--text-light); font-size:1.1em; border-bottom:1px solid rgba(255,255,255,0.02);'>".$bracket['score']."</td>
-            <td style='padding:15px; text-align:center; color:#22c55e; font-size:1.1em; border-bottom:1px solid rgba(255,255,255,0.02);'>".$roundScore."</td>
-            <td style='padding:15px; text-align:center; color:var(--text-muted); border-bottom:1px solid rgba(255,255,255,0.02);'>".$j."</td>";
+			echo "</td><td style='padding:8px 10px; text-align:center; color:var(--text-light); font-size:0.95em; width:40px; border-bottom:1px solid rgba(255,255,255,0.02);'>".$bracket['score']."</td>
+            <td style='padding:8px 10px; text-align:center; color:#22c55e; font-size:0.95em; width:40px; border-bottom:1px solid rgba(255,255,255,0.02);'>".$roundScore."</td>
+            <td style='padding:8px 10px; text-align:center; color:var(--text-muted); font-size:0.95em; width:40px; border-bottom:1px solid rgba(255,255,255,0.02);'>".$numHitsForRound."</td>";
 			
 			$totalScore += $bracket['score'];
 			
-			echo "<td>".$totalEarnedForRound."</td>";
-			echo "<td>".$numHitsForRound."</td>";
-			
-			$totalPointsEarnedByUsers += $totalEarnedForRound;
+			$totalPointsEarnedByUsers += $roundScore;
 			$totalHitsByUsers += $numHitsForRound;
 			
 			for( $i = 0; $i < $numWinners; $i++ )
 			{
-				echo "<td class='".$status[$i]."' onmouseover=\"showTeam( event,".$winnerListForRound[$i][2].");\" onmouseout='clearTeam();'>&nbsp;</td>";
+				$bgStyle = ($status[$i] == "hit") ? "background:#22c55e !important;" : "background:#1a2035 !important;";
+				echo "<td style='".$bgStyle." width:14px; min-width:14px; padding:0;' onmouseover=\"showTeam( event,".$winnerListForRound[$i][2].");\" onmouseout='clearTeam();'>&nbsp;</td>";
 			}
 			echo "</tr>";
 			
@@ -153,16 +151,16 @@ function drawScoringTable( $db, $winners_data, $custompoints, $seedMap,  $roundS
 		
         echo "</tbody><tfoot>";
 		echo "<tr class='tablefooter' style='border-top:2px solid var(--border-color); color:var(--accent-orange); font-weight:bold;'>
-            <td style='padding:15px;'>Averages/Totals</td>
-            <td style='padding:15px; text-align:center;'>".$avgScore."</td>
-            <td style='padding:15px; text-align:center;'>".$avgPointsThisRound."</td>
-            <td style='padding:15px; text-align:center;'>".$avgHits."</td>";
+            <td style='padding:8px 10px;'>Averages/Totals</td>
+            <td style='padding:8px 10px; text-align:center;'>".$avgScore."</td>
+            <td style='padding:8px 10px; text-align:center;'>".$avgPointsThisRound."</td>
+            <td style='padding:8px 10px; text-align:center;'>".$avgHits."</td>";
 		for( $i = 0; $i < $numWinners; $i++ )
 		{
 			if (!isset($winnerListForRound[$i][4])) {
 				$winnerListForRound[$i][4] = 0;
 			}
-			echo "<td style='padding:15px; text-align:center;' onmouseover=\"showTeam( event,".$winnerListForRound[$i][2].");\" onmouseout='clearTeam();'>".$winnerListForRound[$i][4]."</td>";
+			echo "<td style='padding:8px 10px; text-align:center;' onmouseover=\"showTeam( event,".$winnerListForRound[$i][2].");\" onmouseout='clearTeam();'>".$winnerListForRound[$i][4]."</td>";
 		}
 		echo "</tr>";
 		echo "</tfoot></table></div></div><br /></div>\n";
@@ -214,11 +212,11 @@ function drawScoringTable( $db, $winners_data, $custompoints, $seedMap,  $roundS
 			if( e.srcElement )
 			{
 				selectedIndex = e.srcElement.cellIndex;
-				columnHeader = e.srcElement.parentNode.parentNode.parentNode.rows[1].cells[selectedIndex];
+				columnHeader = e.srcElement.parentNode.parentNode.parentNode.rows[0].cells[selectedIndex];
 			} else {
 				// Standard event target selection
 				selectedIndex = e.target.cellIndex;
-				columnHeader = e.target.parentNode.parentNode.parentNode.rows[1].cells[selectedIndex];
+				columnHeader = e.target.parentNode.parentNode.parentNode.rows[0].cells[selectedIndex];
 			}
 			teamName = teamNames[val];
 			headerTxt = teamName + " " + columnHeader.innerHTML;
@@ -234,7 +232,7 @@ function drawScoringTable( $db, $winners_data, $custompoints, $seedMap,  $roundS
 		
 		</script>
 		<div id="main" class="full">
-			<div class="content-card" style="max-width:1400px; margin:0 auto;">
+			<div class="content-card" style="max-width:100%; margin:0 auto;">
 				<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); padding-bottom:15px; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
 					<h2 style="margin:0; color:var(--accent-orange);"><i class="fa-solid fa-magnifying-glass"></i> Scoring Detail</h2>
 					<a href="choose.php" style="padding:8px 16px; background:var(--accent-orange); color:var(--accent-text); border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.9em; transition:background 0.2s;"><i class="fa-solid fa-arrow-left"></i> Back to Standings</a>
