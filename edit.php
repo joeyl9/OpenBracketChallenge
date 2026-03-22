@@ -21,7 +21,8 @@ $bracket_data = $stmt->fetch(PDO::FETCH_ASSOC);
 if(!$bracket_data) {
 	die("Bracket not found.");
 }
-if($bracket_data['email'] !== $user_email) {
+$auth_user_id = (int)$_SESSION['user_id'];
+if((int)$bracket_data['user_id'] !== $auth_user_id) {
 	die("Access Denied: You do not own this bracket.");
 }
 
@@ -58,6 +59,18 @@ $seedsQuery = "SELECT * FROM `master` WHERE `id`=4";
 $stmt = $db->query($seedsQuery);
 $seeds = $stmt->fetch(PDO::FETCH_ASSOC);
 
+$winnersQuery = "SELECT * FROM `master` WHERE `id`=2";
+$wStmt = $db->query($winnersQuery);
+$winners = $wStmt->fetch(PDO::FETCH_ASSOC);
+
+$seedMap = getSeedMap($db);
+
+function teamStr($name, $seedMap) {
+    if(empty($name)) return "TBD";
+    $seed = isset($seedMap[$name]) ? $seedMap[$name] : "?";
+    return "<span style='color:var(--accent-orange); font-weight:bold; margin-right:5px;'>$seed</span> " . $name;
+}
+
 // Meta already fetched above
 
 
@@ -73,7 +86,7 @@ include("header.php");
 	<h3 style="margin-top:0;">Edit Bracket: <?php echo htmlspecialchars(stripslashes($bracket_data['name'])); ?></h3>
 	<div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
 		<div><label>Bracket Name:</label><br><input type="text" name="bracketname" value="<?php echo htmlspecialchars(stripslashes($bracket_data['name'])); ?>" required <?php echo ($bracket_id == 2) ? 'readonly style="padding:5px; background:#444; color:#ccc;"' : 'style="padding:5px;"'; ?>></div>
-		<div><label>Your Name:</label><br><input type="text" name="name" value="<?php echo htmlspecialchars(stripslashes($bracket_data['person'])); ?>" required <?php echo ($bracket_id == 2) ? 'readonly style="padding:5px; background:#444; color:#ccc;"' : 'style="padding:5px;"'; ?>></div>
+		<div><label>Your Name:</label><br><input type="text" name="name" value="<?php echo htmlspecialchars(stripslashes($bracket_data['person'])); ?>" required <?php echo ($b_type == 'sweet16') ? 'readonly style="padding:5px; background:#444; color:#ccc;"' : 'style="padding:5px;"'; ?>></div>
 		<!-- Email Readonly -->
 		<div><label>Email:</label><br><input type="email" name="e-mail" value="<?php echo htmlspecialchars($bracket_data['email']); ?>" readonly style="padding:5px; background:#444; color:#ccc;"></div>
 		<!-- User password editing is handled within the profile settings view -->
@@ -81,6 +94,174 @@ include("header.php");
 </div>
 
 
+<?php 
+if ($b_type == 'sweet16') {
+    for($i=1; $i<=48; $i++) { 
+        echo "<input type='hidden' name='game$i' value='".htmlspecialchars($winners[$i])."'>"; 
+    }
+    for($i=49; $i<=63; $i++) { 
+        echo "<input type='hidden' name='game$i' id='input_game$i' value=''>"; 
+    }
+?>
+<div class="bracket-wrapper" style="background: transparent; width: 100% !important; display: flex; justify-content: space-between;">
+	
+    <!-- LEFT SIDE (Regions 1 & 2) -->
+	<div class="bracket-split-left">
+		
+        <!-- REGION 1 (SOUTH) -->
+        <div class="region-container">
+            <!-- Sweet 16 Round -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
+                <!-- Game 49 -->
+                <div class="matchup" id="matchup_49">
+                     <div class="team" onclick="pickWinner(49, 'input_game49', 57, 0)" data-value="<?php echo htmlspecialchars($winners[33], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[33], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(49, 'input_game49', 57, 0)" data-value="<?php echo htmlspecialchars($winners[34], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[34], $seedMap); ?></div>
+                </div>
+                <!-- Game 50 -->
+                <div class="matchup" id="matchup_50">
+                     <div class="team" onclick="pickWinner(50, 'input_game50', 57, 1)" data-value="<?php echo htmlspecialchars($winners[35], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[35], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(50, 'input_game50', 57, 1)" data-value="<?php echo htmlspecialchars($winners[36], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[36], $seedMap); ?></div>
+                </div>
+            </div>
+            <!-- Elite 8 -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">QUARTERFINALS</div>
+                <!-- Game 57 -->
+                <div class="matchup" id="matchup_57">
+                    <div class="team" onclick="pickWinner(57, 'input_game57', 61, 0)" id="slot_57_0">Wait...</div>
+                    <div class="team" onclick="pickWinner(57, 'input_game57', 61, 0)" id="slot_57_1">Wait...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGION 2 (EAST) -->
+        <div class="region-container" style="margin-top:20px;">
+            <!-- Sweet 16 Round -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
+                <!-- Game 51 -->
+                <div class="matchup" id="matchup_51">
+                     <div class="team" onclick="pickWinner(51, 'input_game51', 58, 0)" data-value="<?php echo htmlspecialchars($winners[37], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[37], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(51, 'input_game51', 58, 0)" data-value="<?php echo htmlspecialchars($winners[38], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[38], $seedMap); ?></div>
+                </div>
+                <!-- Game 52 -->
+                <div class="matchup" id="matchup_52">
+                     <div class="team" onclick="pickWinner(52, 'input_game52', 58, 1)" data-value="<?php echo htmlspecialchars($winners[39], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[39], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(52, 'input_game52', 58, 1)" data-value="<?php echo htmlspecialchars($winners[40], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[40], $seedMap); ?></div>
+                </div>
+            </div>
+            <!-- Elite 8 -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">QUARTERFINALS</div>
+                <!-- Game 58 -->
+                <div class="matchup" id="matchup_58">
+                    <div class="team" onclick="pickWinner(58, 'input_game58', 61, 1)" id="slot_58_0">Wait...</div>
+                    <div class="team" onclick="pickWinner(58, 'input_game58', 61, 1)" id="slot_58_1">Wait...</div>
+                </div>
+            </div>
+        </div>
+
+	</div>
+
+	<!-- CENTER (Final Four) -->
+	<div class="bracket-center">
+		<h2 style="text-align:center; color:#fff; font-size:1.2rem;">SEMIFINALS</h2>
+		<!-- Final Four Game 1 -->
+		<div class="matchup" id="matchup_61">
+			<div class="team" onclick="pickWinner(61, 'input_game61', 63, 0)" id="slot_61_0">Winner Reg 1</div>
+			<div class="team" onclick="pickWinner(61, 'input_game61', 63, 0)" id="slot_61_1">Winner Reg 2</div>
+		</div>
+
+		<!-- Final Four Game 2 -->
+		<div class="matchup" id="matchup_62">
+			<div class="team" onclick="pickWinner(62, 'input_game62', 63, 1)" id="slot_62_0">Winner Reg 3</div>
+			<div class="team" onclick="pickWinner(62, 'input_game62', 63, 1)" id="slot_62_1">Winner Reg 4</div>
+		</div>
+
+		<h2 style="text-align:center; color:var(--accent-orange); font-size:1.4rem;">CHAMPIONSHIP</h2>
+		<!-- Championship -->
+		<div class="matchup" id="matchup_63" style="border: 2px solid var(--accent-orange);">
+			<div class="team" onclick="pickWinner(63, 'input_game63', null, null)" id="slot_63_0">Winner Semi 1</div>
+			<div class="team" onclick="pickWinner(63, 'input_game63', null, null)" id="slot_63_1">Winner Semi 2</div>
+		</div>
+		
+		<div style="text-align:center; margin-top:20px;">
+			<h3 style="color:#fff;">Champion</h3>
+			<div id="champion_display" style="font-size:1.5em; font-weight:bold; color:var(--accent-orange); min-height:40px; margin-bottom: 20px;">?</div>
+			
+			<div style="background: #333; padding: 15px; border-radius: 5px;">
+				<label style="color:#fff; font-weight:bold;">Tiebreaker</label><br>
+				<span style="font-size:0.8rem; color:#ccc;">(Total Points in Final Game)</span><br>
+				<input type="number" name="tiebreaker" value="<?php echo htmlspecialchars($bracket_data['tiebreaker']); ?>" style="width:60px; text-align:center; margin-top:5px; padding:5px; font-weight:bold;" required>
+				<br><br>
+				<input type="submit" name="submit" value="Save Changes" class="finish-btn" style="width: 100%; white-space: normal; padding:10px 20px; font-size:1.1em; cursor:pointer; background: var(--accent-orange); color: white; border:none; border-radius:4px;">
+			</div>
+		</div>
+	</div>
+
+	<!-- RIGHT SIDE (Regions 3 & 4) -->
+	<div class="bracket-split-right">
+        
+         <!-- REGION 3 (MIDWEST) - CORRECT ORDER: Sweet 16 (Right) -> Elite 8 (Inner) -->
+        <div class="region-container">
+            <!-- Sweet 16 Round (FIRST CHILD = FAR RIGHT in row-reverse) -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
+                <!-- Game 53 -->
+                <div class="matchup" id="matchup_53">
+                     <div class="team" onclick="pickWinner(53, 'input_game53', 59, 0)" data-value="<?php echo htmlspecialchars($winners[41], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[41], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(53, 'input_game53', 59, 0)" data-value="<?php echo htmlspecialchars($winners[42], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[42], $seedMap); ?></div>
+                </div>
+                <!-- Game 54 -->
+                <div class="matchup" id="matchup_54">
+                     <div class="team" onclick="pickWinner(54, 'input_game54', 59, 1)" data-value="<?php echo htmlspecialchars($winners[43], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[43], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(54, 'input_game54', 59, 1)" data-value="<?php echo htmlspecialchars($winners[44], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[44], $seedMap); ?></div>
+                </div>
+            </div>
+            
+            <!-- Elite 8 (SECOND CHILD = LEFT OF FAR RIGHT) -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">QUARTERFINALS</div>
+                <!-- Game 59 -->
+                <div class="matchup" id="matchup_59">
+                     <div class="team" onclick="pickWinner(59, 'input_game59', 62, 0)" id="slot_59_0">Wait...</div>
+                     <div class="team" onclick="pickWinner(59, 'input_game59', 62, 0)" id="slot_59_1">Wait...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REGION 4 (WEST) -->
+        <div class="region-container" style="margin-top:20px;">
+            <!-- Sweet 16 Round (Rightmost) -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">ROUND OF 16</div>
+                <!-- Game 55 -->
+                <div class="matchup" id="matchup_55">
+                     <div class="team" onclick="pickWinner(55, 'input_game55', 60, 0)" data-value="<?php echo htmlspecialchars($winners[45], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[45], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(55, 'input_game55', 60, 0)" data-value="<?php echo htmlspecialchars($winners[46], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[46], $seedMap); ?></div>
+                </div>
+                <!-- Game 56 -->
+                <div class="matchup" id="matchup_56">
+                     <div class="team" onclick="pickWinner(56, 'input_game56', 60, 1)" data-value="<?php echo htmlspecialchars($winners[47], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[47], $seedMap); ?></div>
+                     <div class="team" onclick="pickWinner(56, 'input_game56', 60, 1)" data-value="<?php echo htmlspecialchars($winners[48], ENT_QUOTES, 'UTF-8'); ?>"><?php echo teamStr($winners[48], $seedMap); ?></div>
+                </div>
+            </div>
+            
+            <!-- Elite 8 (Inner) -->
+            <div class="round">
+                <div style="text-align:center; color:var(--text-muted); font-size:0.8em; margin-bottom:5px;">QUARTERFINALS</div>
+                <!-- Game 60 -->
+                <div class="matchup" id="matchup_60">
+                     <div class="team" onclick="pickWinner(60, 'input_game60', 62, 1)" id="slot_60_0">Wait...</div>
+                     <div class="team" onclick="pickWinner(60, 'input_game60', 62, 1)" id="slot_60_1">Wait...</div>
+                </div>
+            </div>
+        </div>
+
+	</div>
+</div>
+<?php } else { ?>
 <?php for($i=1; $i<=63; $i++) { echo "<input type='hidden' name='game$i' id='input_game$i' value=''>"; } ?>
 
 <div class="bracket-wrapper" style="background: transparent; width: 100% !important; display: flex; justify-content: space-between;">
@@ -132,6 +313,7 @@ include("header.php");
 		<?php renderRegion($meta['region4'], 49, array(25,26,27,28,29,30,31,32), array(45,46,47,48), array(55,56), 60, $teams, $teamNames, $seeds, 62, 1); ?>
 	</div>
 </div>
+<?php } ?>
 </form>
 </div>
 
