@@ -302,6 +302,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $schema_file = "schema.sql";
     if (file_exists($schema_file)) {
         $sql_content = file_get_contents($schema_file);
+        
+        // Strip UTF-8 BOM if present
+        if (substr($sql_content, 0, 3) === "\xEF\xBB\xBF") {
+            $sql_content = substr($sql_content, 3);
+        }
+        
+        // Normalize line endings to LF before splitting
+        $sql_content = str_replace(array("\r\n", "\r"), "\n", $sql_content);
         $queries = explode(";", $sql_content);
         
         $errCount = 0;
