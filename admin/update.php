@@ -345,7 +345,7 @@ try {
                     ps.bracket_id, 
                     ps.`rank`, 
                     COUNT(*) as num_paths,
-                    COALESCE(pow.probability_win, 0) as p_win
+                    COALESCE(MAX(pow.probability_win), 0) as p_win
                 FROM possible_scores ps
                 LEFT JOIN probability_of_winning pow ON pow.id = ps.bracket_id AND pow.`rank` = ps.`rank`
                 WHERE ps.type='path_to_victory' AND ps.eliminated=0
