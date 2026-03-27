@@ -143,7 +143,6 @@ $meta = $db->query("SELECT * FROM meta WHERE id=1")->fetch(PDO::FETCH_ASSOC);
                  if(el) {
                      el.innerText = pickText;
                      el.dataset.team = cleanName(pickText);
-                     el.classList.add('team-selected');
                      // Reset future path:
                      resetFuture(nextG);
                  }
@@ -261,9 +260,13 @@ $meta = $db->query("SELECT * FROM meta WHERE id=1")->fetch(PDO::FETCH_ASSOC);
                 $val1 = isset($master[$srcG1]) ? $master[$srcG1] : '&nbsp;';
                 $val2 = isset($master[$srcG2]) ? $master[$srcG2] : '&nbsp;';
                 
+                $decided = !empty($master[$gId]) ? $master[$gId] : false;
+                $c1 = ($decided && $decided === $val1) ? 'team-selected' : '';
+                $c2 = ($decided && $decided === $val2) ? 'team-selected' : '';
+                
                 echo "<div class='matchup'>
-                        <div id='slot_{$gId}_0' class='team interactive-team' data-gameid='$gId' onclick='teamClick(this)'>$val1</div>
-                        <div id='slot_{$gId}_1' class='team interactive-team' data-gameid='$gId' onclick='teamClick(this)'>$val2</div>
+                        <div id='slot_{$gId}_0' class='team interactive-team $c1' data-gameid='$gId' onclick='teamClick(this)'>$val1</div>
+                        <div id='slot_{$gId}_1' class='team interactive-team $c2' data-gameid='$gId' onclick='teamClick(this)'>$val2</div>
                       </div>";
             }
             echo "</div>";
@@ -277,9 +280,13 @@ $meta = $db->query("SELECT * FROM meta WHERE id=1")->fetch(PDO::FETCH_ASSOC);
                 $val1 = isset($master[$srcG1]) ? $master[$srcG1] : '&nbsp;';
                 $val2 = isset($master[$srcG2]) ? $master[$srcG2] : '&nbsp;';
 
+                $decided = !empty($master[$gId]) ? $master[$gId] : false;
+                $c1 = ($decided && $decided === $val1) ? 'team-selected' : '';
+                $c2 = ($decided && $decided === $val2) ? 'team-selected' : '';
+
                 echo "<div class='matchup'>
-                        <div id='slot_{$gId}_0' class='team interactive-team' data-gameid='$gId' onclick='teamClick(this)'>$val1</div>
-                        <div id='slot_{$gId}_1' class='team interactive-team' data-gameid='$gId' onclick='teamClick(this)'>$val2</div>
+                        <div id='slot_{$gId}_0' class='team interactive-team $c1' data-gameid='$gId' onclick='teamClick(this)'>$val1</div>
+                        <div id='slot_{$gId}_1' class='team interactive-team $c2' data-gameid='$gId' onclick='teamClick(this)'>$val2</div>
                       </div>";
             }
             echo "</div>";
@@ -292,9 +299,13 @@ $meta = $db->query("SELECT * FROM meta WHERE id=1")->fetch(PDO::FETCH_ASSOC);
             $val1 = isset($master[$srcG1]) ? $master[$srcG1] : '&nbsp;';
             $val2 = isset($master[$srcG2]) ? $master[$srcG2] : '&nbsp;';
             
+            $decided = !empty($master[$gId]) ? $master[$gId] : false;
+            $c1 = ($decided && $decided === $val1) ? 'team-selected' : '';
+            $c2 = ($decided && $decided === $val2) ? 'team-selected' : '';
+            
             echo "<div class='matchup'>
-                    <div id='slot_{$gId}_0' class='team interactive-team' data-gameid='$gId' onclick='teamClick(this)'>$val1</div>
-                    <div id='slot_{$gId}_1' class='team interactive-team' data-gameid='$gId' onclick='teamClick(this)'>$val2</div>
+                    <div id='slot_{$gId}_0' class='team interactive-team $c1' data-gameid='$gId' onclick='teamClick(this)'>$val1</div>
+                    <div id='slot_{$gId}_1' class='team interactive-team $c2' data-gameid='$gId' onclick='teamClick(this)'>$val2</div>
                   </div>";
             echo "</div></div>";
         }
@@ -313,22 +324,43 @@ $meta = $db->query("SELECT * FROM meta WHERE id=1")->fetch(PDO::FETCH_ASSOC);
         <div class="bracket-center">
             <h2>SEMIFINALS</h2>
             <!-- F4 G61 (Sources 57, 58) -->
+            <?php
+            $val1 = $master['57'] ?? '&nbsp;';
+            $val2 = $master['58'] ?? '&nbsp;';
+            $decided = !empty($master['61']) ? $master['61'] : false;
+            $c1 = ($decided && $decided === $val1) ? 'team-selected' : '';
+            $c2 = ($decided && $decided === $val2) ? 'team-selected' : '';
+            ?>
             <div class="matchup">
-                <div id='slot_61_0' class='team interactive-team' data-gameid='61' onclick='teamClick(this)'><?php echo $master['57'] ?? '&nbsp;'; ?></div>
-                <div id='slot_61_1' class='team interactive-team' data-gameid='61' onclick='teamClick(this)'><?php echo $master['58'] ?? '&nbsp;'; ?></div>
+                <div id='slot_61_0' class='team interactive-team <?php echo $c1; ?>' data-gameid='61' onclick='teamClick(this)'><?php echo $val1; ?></div>
+                <div id='slot_61_1' class='team interactive-team <?php echo $c2; ?>' data-gameid='61' onclick='teamClick(this)'><?php echo $val2; ?></div>
             </div>
             
             <!-- F4 G62 (Sources 59, 60) -->
+            <?php
+            $val1 = $master['59'] ?? '&nbsp;';
+            $val2 = $master['60'] ?? '&nbsp;';
+            $decided = !empty($master['62']) ? $master['62'] : false;
+            $c1 = ($decided && $decided === $val1) ? 'team-selected' : '';
+            $c2 = ($decided && $decided === $val2) ? 'team-selected' : '';
+            ?>
             <div class="matchup">
-                <div id='slot_62_0' class='team interactive-team' data-gameid='62' onclick='teamClick(this)'><?php echo $master['59'] ?? '&nbsp;'; ?></div>
-                <div id='slot_62_1' class='team interactive-team' data-gameid='62' onclick='teamClick(this)'><?php echo $master['60'] ?? '&nbsp;'; ?></div>
+                <div id='slot_62_0' class='team interactive-team <?php echo $c1; ?>' data-gameid='62' onclick='teamClick(this)'><?php echo $val1; ?></div>
+                <div id='slot_62_1' class='team interactive-team <?php echo $c2; ?>' data-gameid='62' onclick='teamClick(this)'><?php echo $val2; ?></div>
             </div>
             
             <h2>CHAMPIONSHIP</h2>
             <!-- Champ G63 -->
+            <?php
+            $val1 = $master['61'] ?? '&nbsp;';
+            $val2 = $master['62'] ?? '&nbsp;';
+            $decided = !empty($master['63']) ? $master['63'] : false;
+            $c1 = ($decided && $decided === $val1) ? 'team-selected' : '';
+            $c2 = ($decided && $decided === $val2) ? 'team-selected' : '';
+            ?>
             <div class="matchup" style="border:2px solid var(--accent-orange);">
-                <div id='slot_63_0' class='team interactive-team' data-gameid='63' onclick='teamClick(this)'><?php echo $master['61'] ?? '&nbsp;'; ?></div>
-                <div id='slot_63_1' class='team interactive-team' data-gameid='63' onclick='teamClick(this)'><?php echo $master['62'] ?? '&nbsp;'; ?></div>
+                <div id='slot_63_0' class='team interactive-team <?php echo $c1; ?>' data-gameid='63' onclick='teamClick(this)'><?php echo $val1; ?></div>
+                <div id='slot_63_1' class='team interactive-team <?php echo $c2; ?>' data-gameid='63' onclick='teamClick(this)'><?php echo $val2; ?></div>
             </div>
             
             <h3>Champion</h3>
