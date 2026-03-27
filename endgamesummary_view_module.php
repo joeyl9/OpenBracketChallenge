@@ -39,15 +39,14 @@ function createSummaryTable( $db, $rank, $rankName, $viewAll, $totalScenarios, $
     $orderByLast = ($safeSort == 'pwin') ? "pWin ASC, num_paths ASC, b.id ASC"  : "num_paths ASC, pWin ASC, b.id ASC";
 
     $baseSql = "SELECT
-                  b.id, b.name, b.email,
-                  es.p_win as pWin,
-                  es.num_paths
-                FROM endgame_summary es
-                JOIN brackets b ON b.id = es.bracket_id
-                WHERE es.`rank`=:rank2
-                  AND b.type=:view
-                  AND b.paid<>'0'
-                GROUP BY b.id, b.name, b.email";
+              b.id, b.name, b.email,
+              es.p_win as pWin,
+              es.num_paths
+            FROM endgame_summary es
+            JOIN brackets b ON b.id = es.bracket_id
+            WHERE es.`rank`=:rank2
+              AND b.type=:view
+              AND b.paid<>'0'";
 
     // 2. Query Helper
     $fetchData = function($order, $limit) use ($db, $baseSql, $rank, $view) {
