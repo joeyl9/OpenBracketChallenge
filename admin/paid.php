@@ -18,13 +18,13 @@ $stmt = $db->query($query);
 			<div class="table-container">
 			<table class="adminPaid" id="paidTable">
 					<tr class="paidHeader">
-					    <td class="paidPerson" onclick="sortTable(0)" style="cursor:pointer;" title="Sort">Type <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></th>
-						<td class="paidPerson" onclick="sortTable(1)" style="cursor:pointer;" title="Sort">Name <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></th>
-						<td class="paidBracket" onclick="sortTable(2)" style="cursor:pointer;" title="Sort">Bracket <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></th>
-						<td class="paidEmail" onclick="sortTable(3)" style="cursor:pointer;" title="Sort">Email <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></th>
-						<td class="paidSelector">Paid</th>
-						<td class="paidSelector">Unpaid</th>
-						<td class="paidSelector">Exempt</th>
+					    <td class="paidPerson" data-dir="" onclick="sortTable(0, this)" style="cursor:pointer;" title="Sort">Type <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></td>
+						<td class="paidPerson" data-dir="" onclick="sortTable(1, this)" style="cursor:pointer;" title="Sort">Name <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></td>
+						<td class="paidBracket" data-dir="" onclick="sortTable(2, this)" style="cursor:pointer;" title="Sort">Bracket <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></td>
+						<td class="paidEmail" data-dir="" onclick="sortTable(3, this)" style="cursor:pointer;" title="Sort">Email <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></td>
+						<td class="paidSelector" data-dir="" onclick="sortTable(4, this)" style="cursor:pointer;" title="Sort">Paid <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></td>
+						<td class="paidSelector" data-dir="" onclick="sortTable(5, this)" style="cursor:pointer;" title="Sort">Unpaid <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></td>
+						<td class="paidSelector" data-dir="" onclick="sortTable(6, this)" style="cursor:pointer;" title="Sort">Exempt <i class="fa-solid fa-sort" style="font-size:0.8em; color:#666;"></i></td>
 					</tr>
 					<?php
 					$rowCount = 0;
@@ -79,45 +79,86 @@ $stmt = $db->query($query);
 </div>
 </div>
 <script>
-function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+function getRadioRank(row) {
+  var checked = row.querySelector("input[type='radio']:checked");
+  if (!checked) return 99;
+  var val = parseInt(checked.value, 10);
+  if (val === 1) return 1; // Paid
+  if (val === 2) return 2; // Exempt
+  if (val === 0) return 3; // Unpaid
+  return 99;
+}
+
+function sortTable(n, headerElem) {
+  var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById("paidTable");
+  
+  var currentDir = headerElem.getAttribute("data-dir");
+  var dir = (currentDir === "asc") ? "desc" : "asc";
+  
+  var allHeaders = table.rows[0].querySelectorAll("td[onclick]");
+  for (var j = 0; j < allHeaders.length; j++) {
+      var th = allHeaders[j];
+      th.setAttribute("data-dir", "");
+      th.style.color = ""; 
+      var icon = th.querySelector("i");
+      if(icon) {
+          icon.className = "fa-solid fa-sort";
+          icon.style.color = "#666";
+      }
+  }
+
+  headerElem.setAttribute("data-dir", dir);
+  headerElem.style.color = "var(--accent-orange)";
+  var activeIcon = headerElem.querySelector("i");
+  if(activeIcon) {
+      activeIcon.className = (dir === "asc") ? "fa-solid fa-sort-up" : "fa-solid fa-sort-down";
+      activeIcon.style.color = "var(--accent-orange)";
+  }
+
   switching = true;
-  dir = "asc"; 
   while (switching) {
     switching = false;
     rows = table.rows;
-    // Loop through all table rows (except the first, which contains table headers, and last which is submit):
     for (i = 1; i < (rows.length - 2); i++) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
       
-      // Simple text content comparison (strip tags for badge)
-      var xContent = x.textContent || x.innerText;
-      var yContent = y.textContent || y.innerText;
-      
-      if (dir == "asc") {
-        if (xContent.toLowerCase() > yContent.toLowerCase()) {
-          shouldSwitch = true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (xContent.toLowerCase() < yContent.toLowerCase()) {
-          shouldSwitch = true;
-          break;
-        }
+      if (n >= 4) {
+          var xRank = getRadioRank(rows[i]);
+          var yRank = getRadioRank(rows[i + 1]);
+          if (dir === "asc") {
+              if (xRank > yRank) {
+                  shouldSwitch = true;
+                  break;
+              }
+          } else if (dir === "desc") {
+              if (xRank < yRank) {
+                  shouldSwitch = true;
+                  break;
+              }
+          }
+      } else {
+          var xContent = (x.textContent || x.innerText).trim().toLowerCase();
+          var yContent = (y.textContent || y.innerText).trim().toLowerCase();
+          
+          if (dir === "asc") {
+            if (xContent > yContent) {
+              shouldSwitch = true;
+              break;
+            }
+          } else if (dir === "desc") {
+            if (xContent < yContent) {
+              shouldSwitch = true;
+              break;
+            }
+          }
       }
     }
     if (shouldSwitch) {
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
-      switchcount ++;      
-    } else {
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
     }
   }
 }
