@@ -1,0 +1,5 @@
+ALTER TABLE `meta`
+ADD COLUMN `update_check_enabled` TINYINT NOT NULL DEFAULT 0,
+ADD COLUMN `update_last_checked` DATETIME DEFAULT NULL,
+ADD COLUMN `update_latest_version` VARCHAR(32) DEFAULT NULL,
+ADD COLUMN `update_branch` VARCHAR(32) DEFAULT NULL;

@@ -33,6 +33,9 @@ if (!function_exists('h')) {
 if (!defined('APP_VERSION')) {
     define('APP_VERSION', '1.0.0');
 }
+if (!defined('APP_BRANCH')) {
+    define('APP_BRANCH', 'main');
+}
 
 // Security Headers
 // Security Headers (CLI Guard)
@@ -404,6 +407,94 @@ function simulateLeaderboard($db, $if_data) {
     });
     
     return $results;
+}
+
+function checkForUpdates($db, $meta) {
+    if (empty($meta['update_check_enabled'])) {
+        return null; // Return immediately if opts out
+    }
+
+    $now = time();
+    $cache_time = isset($meta['update_last_checked']) ? strtotime($meta['update_last_checked']) : 0;
+    
+    // Cache for 24 hours (86400 seconds)
+    if ($now - $cache_time < 86400 && !empty($meta['update_latest_version'])) {
+        return [
+            'current' => APP_VERSION,
+            'latest' => $meta['update_latest_version'],
+            'branch' => $meta['update_branch'],
+            'update_available' => version_compare(APP_VERSION, ltrim($meta['update_latest_version'], 'v'), '<')
+        ];
+    }
+
+    $url = 'https://api.github.com/repos/joeyl9/OpenBracketChallenge/releases';
+    $options = [
+        'http' => [
+            'method' => 'GET',
+            'header' => "User-Agent: OpenBracketChallenge/".APP_VERSION."\r\n",
+            'timeout' => 5
+        ]
+    ];
+    $context = stream_context_create($options);
+    $response = @file_get_contents($url, false, $context);
+
+    if ($response === false) {
+        return null; // Fail silently
+    }
+
+    $releases = @json_decode($response, true);
+    if (!is_array($releases)) {
+        return null;
+    }
+
+    $latest_version = APP_VERSION;
+    $found_release = false;
+
+    foreach ($releases as $release) {
+        $tag = $release['current_tag_name'] ?? $release['tag_name'] ?? ''; // Support some variations of github API
+        
+        if (empty($tag)) continue;
+        
+        $is_match = false;
+        if (APP_BRANCH === 'main') {
+            // Main branch expects standard versions without suffixes.
+            if (strpos($tag, 'staging-') === false && strpos($tag, 'dev-') === false) {
+                $is_match = true;
+                $clean_tag = ltrim($tag, 'v');
+            }
+        } else {
+            // staging or dev
+            if (strpos($tag, APP_BRANCH . '-') === 0) {
+                $is_match = true;
+                $clean_tag = str_replace(APP_BRANCH . '-', '', $tag);
+                $clean_tag = ltrim($clean_tag, 'v');
+            }
+        }
+        
+        if ($is_match) {
+            $latest_version = $clean_tag;
+            $found_release = true;
+            break; // Takes the newest valid release (as API sorts by date)
+        }
+    }
+
+    if ($found_release) {
+        try {
+            $stmt = $db->prepare("UPDATE `meta` SET `update_last_checked` = NOW(), `update_latest_version` = ?, `update_branch` = ? WHERE `id` = 1");
+            $stmt->execute([$latest_version, APP_BRANCH]);
+        } catch (Exception $e) {
+            // Ignore DB errors on cache save
+        }
+        
+        return [
+            'current' => APP_VERSION,
+            'latest' => $latest_version,
+            'branch' => APP_BRANCH,
+            'update_available' => version_compare(APP_VERSION, $latest_version, '<')
+        ];
+    }
+    
+    return null;
 }
 
 } // End Guard

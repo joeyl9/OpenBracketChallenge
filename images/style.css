@@ -130,6 +130,54 @@ html {
     color: var(--accent-orange);
 }
 
+.version-info {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.branch-badge {
+    font-size: 0.7rem;
+    background-color: var(--secondary-blue);
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--text-light);
+}
+
+.update-notice {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent-text, #fff);
+    background: var(--accent-orange);
+    padding: 3px 9px;
+    border-radius: 20px;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    box-shadow: 0 0 8px rgba(249, 115, 22, 0.4);
+    animation: pulse-update 2.5s ease-in-out infinite;
+}
+
+.update-notice i {
+    font-size: 0.65rem;
+}
+
+.update-notice:hover {
+    background: var(--accent-orange-hover, var(--accent-orange));
+    color: var(--accent-text, #fff);
+    box-shadow: 0 0 14px rgba(249, 115, 22, 0.65);
+    text-decoration: none;
+}
+
+@keyframes pulse-update {
+    0%, 100% { box-shadow: 0 0 8px rgba(249, 115, 22, 0.4); }
+    50% { box-shadow: 0 0 16px rgba(249, 115, 22, 0.75); }
+}
+
 .version-badge a.upstream-attribution {
     color: var(--text-muted);
     text-decoration: none;

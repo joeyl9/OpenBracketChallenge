@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             
     $use_live = isset($_POST['use_live_scoring']) ? 1 : 0;
+    $update_check = isset($_POST['update_check_enabled']) ? 1 : 0;
     $p1 = $_POST['payout_1'];
     $p2 = $_POST['payout_2'];
     $p3 = $_POST['payout_3'];
@@ -113,6 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             cutType = ?,
             deadline = ?,
             use_live_scoring = ?,
+            update_check_enabled = ?,
             payout_1 = ?,
             payout_2 = ?,
             payout_3 = ?,
@@ -137,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $params = [
         $title, $sweet16, $subtitle, $cost, $cut, $cutType, $deadline,
-        $use_live, $p1, $p2, $p3, $reg_mode, $reg_password, $reg_token, $refundLast, $_POST['max_brackets'],
+        $use_live, $update_check, $p1, $p2, $p3, $reg_mode, $reg_password, $reg_token, $refundLast, $_POST['max_brackets'],
         $s16_closed, $s16_deadline, $s16_cost, $s16_cut, $s16_cutType, $s16_p1, $s16_p2, $s16_p3,
         $s16_reg_mode, $s16_reg_pass, $s16_reg_token, $s16_refund, $_POST['max_sweet16_brackets']
     ];
@@ -582,6 +584,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="checkbox" name="use_live_scoring" value="1" <?php if(!empty($meta['use_live_scoring'])) echo "checked"; ?> style="width:auto; margin-right:10px;">
                         Enable Auto-Fetch & Update Scores (External Feed)
                     </label>
+                </div>
+            </div>
+
+            <div class="form-group" style="grid-column: 1 / -1;">
+                <label>Updates:</label>
+                <div style="background: rgba(249, 115, 22, 0.1); padding: 10px; border: 1px solid var(--accent-orange); border-radius: 4px;">
+                    <label style="font-weight:normal; display:flex; align-items:center; cursor:pointer; color: var(--text-light); margin:0;">
+                        <input type="checkbox" name="update_check_enabled" value="1" <?php if(!empty($meta['update_check_enabled'])) echo "checked"; ?> style="width:auto; margin-right:10px;">
+                        Check for Updates
+                    </label>
+                    <small class="helper-text">
+                        Off by default. When enabled, the admin dashboard will check GitHub to see if a newer version of the project is available.
+                    </small>
                 </div>
             </div>
 

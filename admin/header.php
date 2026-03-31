@@ -13,6 +13,7 @@ $meta = $stmt->fetch(PDO::FETCH_ASSOC);
 	<meta charset="UTF-8">
 	<meta name="author" content="Matt Felser, Brian Battaglia, John Holder, Robert Jailall" />
 	<link rel="stylesheet" type="text/css" href="../images/style.css?v=<?php echo filemtime(__DIR__ . '/../images/style.css'); ?>" media="all" />
+	<link rel="stylesheet" href="../css/all.min.css">
 	<link rel="shortcut icon" href="../images/favicon.ico">
     
     <?php
@@ -203,6 +204,17 @@ $meta = $stmt->fetch(PDO::FETCH_ASSOC);
 				<a href="https://github.com/joeyl9/OpenBracketChallenge" target="_blank" class="current-project" title="Current Maintained Project">
 					<i class="fa-brands fa-github"></i> &copy; <?php echo date("Y"); ?> OpenBracketChallenge
 				</a>
+				<?php 
+				$update_info = checkForUpdates($db, $meta);
+				if ($update_info) {
+					if ($update_info['branch'] !== 'main') {
+						echo '<span class="branch-badge">' . h($update_info['branch']) . '</span>';
+					}
+					if ($update_info['update_available']) {
+						echo '<a href="https://github.com/joeyl9/OpenBracketChallenge/releases" target="_blank" class="update-notice" title="Click to view release notes"><i class="fa-solid fa-arrow-up"></i> Update available: v' . h($update_info['current']) . ' → v' . h($update_info['latest']) . '</a>';
+					}
+				}
+				?>
 			</div>
             <!-- Mobile Trigger -->
             <button id="mobile-menu-btn" onclick="console.log('Admin Button Clicked Check');" aria-label="Open menu" aria-controls="mobile-drawer" aria-expanded="false">
