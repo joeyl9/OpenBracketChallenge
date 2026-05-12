@@ -94,8 +94,10 @@ if($tiebreaker != NULL && is_numeric($tiebreaker) && $person != NULL && $email !
 }
 else
 {
-	$body = "Your bracket has been submitted with some sort of error. Saving it anyway. Contact " . $meta['email'] . " about a fix.";
+	$body = "Error: Invalid submission. Please ensure all fields are filled out, including a numeric tiebreaker.";
 	$_SESSION['errors'] = $body;
+	header("Location: submit.php");
+	exit();
 }	
 
 // Submit bracket (INSERT new bracket)

@@ -130,6 +130,13 @@ $seeds = $stmt->fetch(PDO::FETCH_ASSOC);
 
 include("header.php");
 
+if (isset($_SESSION['errors'])) {
+    echo '<div style="background: var(--error-bg, #7f1d1d); color: #fecaca; padding: 15px; text-align: center; margin: 20px auto; max-width: 800px; border-radius: 6px; border: 1px solid #b91c1c; font-weight: bold;">';
+    echo '<i class="fa-solid fa-triangle-exclamation"></i> ' . htmlspecialchars($_SESSION['errors']);
+    echo '</div>';
+    unset($_SESSION['errors']);
+}
+
 // AUTH CHECK (Session-only)
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 $user_email = isset($_SESSION['useremail']) ? $_SESSION['useremail'] : null;

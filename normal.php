@@ -20,19 +20,15 @@ function getRankFormat ($original, $hypothetical)
 	return $change."&nbsp;(".$hypothetical.")";
 }
 
-// get sort style
-if( isset($_GET['sort']) && $_GET['sort'] != NULL )
-{
-	$sortStyle = $_GET['sort'];
-}
-else
-{
-	$sortStyle = 'main';
-}
+// get sort style (validated against scoringTypes after they are loaded below)
+$sortStyle = (isset($_GET['sort']) && $_GET['sort'] !== '') ? $_GET['sort'] : 'main';
 
 
 // get view filter (moved up so ranking calculation uses it)
-$view = isset($_GET['view']) ? $_GET['view'] : 'main';
+$view = $_GET['view'] ?? 'main';
+if (!in_array($view, ['main', 'sweet16'], true)) {
+    $view = 'main';
+}
 
 // get info about scoring systems
 $scoringInfo = array();
@@ -44,6 +40,13 @@ $scoringTypesQuery = "SELECT scoring_type as name, scoring_info.display_name, de
 	"FROM scores, scoring_info WHERE scores.scoring_type = scoring_info.type GROUP BY scoring_type ORDER BY display_name";
 $stmt = $db->query($scoringTypesQuery);
 $scoringTypes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+$validSortStyles = array_column($scoringTypes, 'name');
+$validSortStyles[] = 'main';
+if (!preg_match('/^[A-Za-z0-9_]+$/', $sortStyle) || !in_array($sortStyle, $validSortStyles, true)) {
+    $sortStyle = 'main';
+}
 
 $additionalSortingSources = "";
 $additionalSortingConditions = "";
@@ -75,8 +78,9 @@ foreach($scoringTypes as $scoringType)
 	
 	// get rankings for each scoring system
     // Fix: Filter by current view ('main' or 'sweet16') so ranks are relative to peers
-	$rankingQuery = "SELECT s.id, s.score FROM scores s, brackets b WHERE s.scoring_type = '".$scoringSystem."' AND s.id = b.id AND b.type = '$view' ORDER BY s.score DESC";
-	$rankStmt = $db->query($rankingQuery);
+	$rankingQuery = "SELECT s.id, s.score FROM scores s, brackets b WHERE s.scoring_type = :stype AND s.id = b.id AND b.type = :view ORDER BY s.score DESC";
+	$rankStmt = $db->prepare($rankingQuery);
+	$rankStmt->execute([':stype' => $scoringSystem, ':view' => $view]);
 	
 	$i = 0;
 	$rankCounter = 0;
@@ -240,32 +244,35 @@ $scoringDescriptions .= "\"\"";
                         $metaStmt = $db->query("SELECT tiebreaker FROM meta WHERE id=1");
                         $metaTiebreaker = (int)$metaStmt->fetchColumn();
 
+					
 						$query = "SELECT main.id, main.name, main.score, best_main.score AS b_score, brackets.tiebreaker, brackets.63, brackets.email, brackets.eliminated, brackets.person
-								FROM 
-								scores main, 
-								best_scores best_main, 
-								brackets 
-								
+								FROM
+								scores main,
+								best_scores best_main,
+								brackets
+
 								".$additionalSortingSources."
-								
-								WHERE 
-								main.scoring_type = best_main.scoring_type AND 
-								main.id = best_main.id AND 
-								main.scoring_type = 'main' AND 
+
+								WHERE
+								main.scoring_type = best_main.scoring_type AND
+								main.id = best_main.id AND
+								main.scoring_type = 'main' AND
 								main.id = brackets.id AND
-                                brackets.type = '$view'
-								
+                                brackets.type = :view
+
 								".$additionalSortingConditions."
-								
-								ORDER BY 
-								
-								".$sortStyle.".score DESC, 
+
+								ORDER BY
+
+								".$sortStyle.".score DESC,
                                 ABS(CAST(brackets.tiebreaker AS SIGNED) - $metaTiebreaker) ASC,
                                 best_main.score DESC,
-								
+
 								main.name ASC";
-						
-						$result = $db->query($query);
+
+
+						$result = $db->prepare($query);
+						$result->execute([':view' => $view]);
 						$eliminated=0;
 						$top_score = -1;
 						

@@ -44,7 +44,10 @@ include("header.php");
 					<tbody>
 					<?php
                         // VIEW FILTERING (Main vs Sweet 16)
-                        $view = isset($_GET['view']) ? $_GET['view'] : 'main';
+                        $view = $_GET['view'] ?? 'main';
+                        if (!in_array($view, ['main', 'sweet16'], true)) {
+                            $view = 'main';
+                        }
 
                         // Toggle Buttons (Reuse same style as normal.php for consistency)
                         if(!empty($meta['sweet16Competition'])) {
@@ -60,8 +63,9 @@ include("header.php");
                             echo '</div></div>';
                         }
                     
-						$query = "SELECT scores.id, scores.name, scores.score, best_scores.score AS b_score, brackets.tiebreaker, brackets.63, brackets.email, brackets.person FROM scores, best_scores, brackets WHERE scores.scoring_type = best_scores.scoring_type and scores.scoring_type = 'main' and scores.id = best_scores.id AND scores.id = brackets.id AND brackets.type = '$view' ORDER BY best_scores.score DESC, scores.score DESC, scores.name ASC";
-						$stmt = $db->query($query);
+						$query = "SELECT scores.id, scores.name, scores.score, best_scores.score AS b_score, brackets.tiebreaker, brackets.63, brackets.email, brackets.person FROM scores, best_scores, brackets WHERE scores.scoring_type = best_scores.scoring_type and scores.scoring_type = 'main' and scores.id = best_scores.id AND scores.id = brackets.id AND brackets.type = :view ORDER BY best_scores.score DESC, scores.score DESC, scores.name ASC";
+						$stmt = $db->prepare($query);
+						$stmt->execute([':view' => $view]);
 						$rankCounter = 0;
 						$rank = 0;
 						$prev_score = -1;
