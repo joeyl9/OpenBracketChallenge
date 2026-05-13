@@ -186,8 +186,8 @@ $existing = $checkStmt->fetch(PDO::FETCH_ASSOC);
         <div class="sf-bracket">
             <!-- Left Column -->
             <div class="sf-col-left">
-                <?php renderRegion($r1, 1, $existing); ?>
-                <?php renderRegion($r2, 17, $existing); ?>
+                <?php renderStartFormRegion($r1, 1, $existing); ?>
+                <?php renderStartFormRegion($r2, 17, $existing); ?>
             </div>
 
             <!-- Center -->
@@ -207,8 +207,8 @@ $existing = $checkStmt->fetch(PDO::FETCH_ASSOC);
 
             <!-- Right Column -->
             <div class="sf-col-right">
-                <?php renderRegion($r3, 33, $existing); ?>
-                <?php renderRegion($r4, 49, $existing); ?>
+                <?php renderStartFormRegion($r3, 33, $existing); ?>
+                <?php renderStartFormRegion($r4, 49, $existing); ?>
             </div>
         </div>
 
@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </html>
 
 <?php
-function renderRegion($name, $startId, $existing) {
+function renderStartFormRegion($name, $startId, $existing) {
     $seeds = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15];
     
     

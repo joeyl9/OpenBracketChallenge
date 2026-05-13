@@ -77,6 +77,9 @@ if(isset($_POST['print']))
 
 <?php
 
+	$rank = "";
+	$score_data = ['score' => ''];
+	$best_data = ['score' => ''];
 	viewBracket( $meta, $picks, $team_data, $rank, $score_data, $best_data );
 	exit();
 }

@@ -10,7 +10,7 @@ $user_email = $auth_user_email;
 if(!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 	die("Invalid Request");
 }
-$bracket_id = $_GET['id'];
+$bracket_id = (int)$_GET['id'];
 
 // 2. Fetch Bracket & Verify Owner
 $query = "SELECT * FROM `brackets` WHERE `id`=:id";

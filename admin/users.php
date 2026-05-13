@@ -18,9 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_user'])) {
             $stmt = $db->prepare("INSERT INTO admin_users (username, password_hash, role) VALUES (?, ?, ?)");
             $stmt->execute([$username, $hash, $role]);
             log_admin_action('ADD_USER', "Added admin user: $username ($role)");
-            $message = "<div class='success'>User '$username' added successfully.</div>";
+            $message = "<div class='success'>User '" . h($username) . "' added successfully.</div>";
         } catch (PDOException $e) {
-            $message = "<div class='error'>Error adding user: " . $e->getMessage() . "</div>";
+            $message = "<div class='error'>Error adding user: " . h($e->getMessage()) . "</div>";
         }
     } else {
         $message = "<div class='error'>Username and Password required.</div>";
@@ -44,7 +44,7 @@ if (isset($_GET['delete'])) {
             $stmt = $db->prepare("DELETE FROM admin_users WHERE id = ?");
             $stmt->execute([$id]);
             log_admin_action('DELETE_USER', "Deleted admin user: $target (ID: $id)");
-            $message = "<div class='success'>User '$target' deleted.</div>";
+            $message = "<div class='success'>User '" . h($target) . "' deleted.</div>";
         }
     }
 }
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_role'])) {
             $stmt->execute([$new_role, $target_id]);
             
             log_admin_action('UPDATE_ROLE', "Changed UserID $target_id role from '$old_role' to '$new_role'");
-            $message = "<div class='success'>User role updated to <strong>$new_role</strong>.</div>";
+            $message = "<div class='success'>User role updated to <strong>" . h($new_role) . "</strong>.</div>";
         }
     } else {
         $message = "<div class='error'>Invalid role selected or user not found.</div>";

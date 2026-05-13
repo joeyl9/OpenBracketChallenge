@@ -746,8 +746,8 @@ class CalcEngine {
                     }
                     
                     if ($pWin == null || $pWin <= 0 || $pWin >= 1) {
-                        $ws = $winnerSeed ?? 0;
-                        $ls = $loserSeed ?? 0;
+                        $ws = (int)($winnerSeed ?? 0);
+                        $ls = (int)($loserSeed ?? 0);
                         if (($ws + $ls) > 0) {
                             $pWin = 1 - ($ws / ($ws + $ls));
                         } else {

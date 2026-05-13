@@ -29,7 +29,7 @@ $colors = [
 
 // Pick color based on name hash so it stays consistent for the same user
 $seed = crc32($name);
-$bgColor = $colors[$seed % count($colors)];
+$bgColor = $colors[abs($seed) % count($colors)];
 
 $user_id = isset($_GET['user_id']) ? (int)$_GET['user_id'] : 0;
 

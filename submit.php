@@ -141,23 +141,7 @@ if (isset($_SESSION['errors'])) {
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 $user_email = isset($_SESSION['useremail']) ? $_SESSION['useremail'] : null;
 
-if(!$user_id) {
-    echo '<div id="main" style="padding:40px; min-height:500px; display:flex; justify-content:center; align-items:center;">
-            <div style="background:#1e293b; padding:40px; border-radius:12px; width:100%; max-width:500px; border:1px solid #334155; box-shadow:0 25px 50px -12px rgba(0,0,0,0.5); text-align:center;">
-                <h2 style="color:var(--accent-orange); margin-top:0; font-size:2rem; margin-bottom:15px;"><i class="fa-solid fa-lock"></i> Login Required</h2>
-                <p style="color:var(--text-light); margin-bottom:30px; font-size:1.1em;">You must be logged in to create a bracket.</p>
-                <div style="display:flex; gap:15px; justify-content:center;">
-                    <a href="login.php" style="background:var(--accent-orange); color:white; padding:12px 30px; text-decoration:none; border-radius:6px; font-weight:bold; transition:all 0.2s;">Log In</a>
-                    <a href="register.php" style="background:#334155; color:white; padding:12px 30px; text-decoration:none; border-radius:6px; font-weight:bold; transition:all 0.2s; border:1px solid #475569;">Register</a>
-                </div>
-            </div>
-          </div>
-          </div>';
-    exit();
-}
-
-// RESTRICTION: Default Admin (Break Glass) cannot submit brackets
-if(is_admin() && empty($user_id)) {
+if(is_admin() && !$user_id) {
     echo '<div id="main" style="padding:40px; text-align:center;">
             <div style="background:#1e293b; padding:40px; border-radius:12px; max-width:600px; margin:0 auto; border:1px solid #334155;">
                 <h2 style="color:#f59e0b; margin-top:0;"><i class="fa-solid fa-user-shield"></i> Administrator Account</h2>
@@ -172,6 +156,21 @@ if(is_admin() && empty($user_id)) {
           </div>
           </div>';
     include("footer.php");
+    exit();
+}
+
+if(!$user_id) {
+    echo '<div id="main" style="padding:40px; min-height:500px; display:flex; justify-content:center; align-items:center;">
+            <div style="background:#1e293b; padding:40px; border-radius:12px; width:100%; max-width:500px; border:1px solid #334155; box-shadow:0 25px 50px -12px rgba(0,0,0,0.5); text-align:center;">
+                <h2 style="color:var(--accent-orange); margin-top:0; font-size:2rem; margin-bottom:15px;"><i class="fa-solid fa-lock"></i> Login Required</h2>
+                <p style="color:var(--text-light); margin-bottom:30px; font-size:1.1em;">You must be logged in to create a bracket.</p>
+                <div style="display:flex; gap:15px; justify-content:center;">
+                    <a href="login.php" style="background:var(--accent-orange); color:white; padding:12px 30px; text-decoration:none; border-radius:6px; font-weight:bold; transition:all 0.2s;">Log In</a>
+                    <a href="register.php" style="background:#334155; color:white; padding:12px 30px; text-decoration:none; border-radius:6px; font-weight:bold; transition:all 0.2s; border:1px solid #475569;">Register</a>
+                </div>
+            </div>
+          </div>
+          </div>';
     exit();
 }
 

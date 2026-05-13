@@ -20,7 +20,7 @@ if(!($teams = $stmt->fetch(PDO::FETCH_ASSOC))) {
 // Prevent the default Administrator account from creating or viewing personal brackets.
 // The default Admin is only allowed to edit the Master Bracket (ID=0).
 
-$id = isset($_POST['id']) ? $_POST['id'] : (isset($_GET['id']) ? $_GET['id'] : 0);
+$id = (int)($_POST['id'] ?? $_GET['id'] ?? 0);
 
 // Restrict "Break Glass" Admin from Creating/Editing PERSONAL brackets,
 // but ALLOW editing the Master Bracket (ID=0).
@@ -39,7 +39,7 @@ if(is_admin() && !isset($_SESSION['user_id'])) {
 }
 
 // Fetch Picks (Master ID=2 or User Bracket)
-$id = isset($_POST['id']) ? $_POST['id'] : 0;
+$id = (int)($_POST['id'] ?? 0);
 
 if($id == 0) {
 	$query = "SELECT * FROM `master` WHERE `id`=2";
@@ -79,7 +79,7 @@ if($id == 0 && $meta['closed'] == 0) {
 
 <div id="main" style="max-width: 100%; box-sizing: border-box;">
 	<div class="full">
-		<h2 style="margin-top:0;"><?php echo $bracketName; ?></h2>
+		<h2 style="margin-top:0;"><?php echo h($bracketName); ?></h2>
         <div style="margin-bottom: 20px;">
             <a href="index.php" class="btn-outline">&larr; Back to Dashboard</a>
         </div>
@@ -327,7 +327,7 @@ function renderAdminRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games,
 	echo "<div class='round'><h3>Round 2</h3>";
 	foreach($r2Games as $gId) {
 		$nextGame = 49 + floor(($gId-33)/2);
-		$nextSlot = ($gId % 2 == 1) ? 0 : 1; $t1_safe = htmlspecialchars($t1_name, ENT_QUOTES, 'UTF-8'); $t2_safe = htmlspecialchars($t2_name, ENT_QUOTES, 'UTF-8');
+		$nextSlot = ($gId % 2 == 1) ? 0 : 1;
 		echo "<div class='matchup' id='matchup_$gId'>
 				<div class='team' id='slot_{$gId}_0' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>&nbsp;</div>
 				<div class='team' id='slot_{$gId}_1' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>&nbsp;</div>
@@ -338,7 +338,7 @@ function renderAdminRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games,
 	echo "<div class='round'><h3>Round of 16</h3>";
 	foreach($r3Games as $gId) {
 		$nextGame = 57 + floor(($gId-49)/2);
-		$nextSlot = ($gId % 2 == 1) ? 0 : 1; $t1_safe = htmlspecialchars($t1_name, ENT_QUOTES, 'UTF-8'); $t2_safe = htmlspecialchars($t2_name, ENT_QUOTES, 'UTF-8');
+		$nextSlot = ($gId % 2 == 1) ? 0 : 1;
 		echo "<div class='matchup' id='matchup_$gId'>
 				<div class='team' id='slot_{$gId}_0' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>&nbsp;</div>
 				<div class='team' id='slot_{$gId}_1' onclick='pickWinner($gId, \"input_$gId\", $nextGame, $nextSlot)'>&nbsp;</div>

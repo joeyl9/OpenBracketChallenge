@@ -350,33 +350,33 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- Final Four Game 1 (61) -->
             <div class="matchup" style="margin-bottom: 30px;">
                 <!-- Slot 0: Winner of Region 1 (Game 57 winner -> Picks[57]) -->
-                <div class="team" data-gameid="61"><?php echo isset($picks[57]) ? $picks[57] : '&nbsp;'; ?></div>
+                <div class="team" data-gameid="61"><?php echo isset($picks[57]) ? h($picks[57]) : '&nbsp;'; ?></div>
                 <!-- Slot 1: Winner of Region 2 (Game 58 winner -> Picks[58]) -->
-                <div class="team" data-gameid="61"><?php echo isset($picks[58]) ? $picks[58] : '&nbsp;'; ?></div>
+                <div class="team" data-gameid="61"><?php echo isset($picks[58]) ? h($picks[58]) : '&nbsp;'; ?></div>
             </div>
 
             <!-- Final Four Game 2 (62) -->
             <div class="matchup" style="margin-bottom: 30px;">
                 <!-- Slot 0: Winner of Region 3 (Game 59 winner -> Picks[59]) -->
-                <div class="team" data-gameid="62"><?php echo isset($picks[59]) ? $picks[59] : '&nbsp;'; ?></div>
+                <div class="team" data-gameid="62"><?php echo isset($picks[59]) ? h($picks[59]) : '&nbsp;'; ?></div>
                 <!-- Slot 1: Winner of Region 4 (Game 60 winner -> Picks[60]) -->
-                <div class="team" data-gameid="62"><?php echo isset($picks[60]) ? $picks[60] : '&nbsp;'; ?></div>
+                <div class="team" data-gameid="62"><?php echo isset($picks[60]) ? h($picks[60]) : '&nbsp;'; ?></div>
             </div>
 
             <h2 style="text-align:center; color:#fff; font-size:1.3rem; margin-top:20px; margin-bottom:15px; text-transform:uppercase; letter-spacing:1px;">Championship</h2>
             <!-- Championship (63) -->
             <div class="matchup">
                 <!-- Slot 0: Winner of Game 61 -> Picks[61] -->
-                <div class="team" data-gameid="63"><?php echo isset($picks[61]) ? $picks[61] : '&nbsp;'; ?></div>
+                <div class="team" data-gameid="63"><?php echo isset($picks[61]) ? h($picks[61]) : '&nbsp;'; ?></div>
                 <!-- Slot 1: Winner of Game 62 -> Picks[62] -->
-                <div class="team" data-gameid="63"><?php echo isset($picks[62]) ? $picks[62] : '&nbsp;'; ?></div>
+                <div class="team" data-gameid="63"><?php echo isset($picks[62]) ? h($picks[62]) : '&nbsp;'; ?></div>
             </div>
 
             <div style="text-align:center; margin-top:30px;">
                 <h3 style="color:#fff; text-transform:uppercase; letter-spacing:1px; margin-bottom:15px;"><?php echo date('Y'); ?> Champion</h3>
                 <div class="matchup" style="display:inline-block; min-width:250px; margin-bottom:30px;">
                     <div id="champion_display" class="team" data-gameid="63" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; white-space:normal; font-size:1.2em; font-weight:bold; padding:15px 25px; line-height:1.5;">
-                        <?php echo isset($picks[63]) ? $picks[63] : '?'; ?>
+                        <?php echo isset($picks[63]) ? h($picks[63]) : '?'; ?>
                     </div>
                 </div>
                 <br>
@@ -410,13 +410,13 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
 	echo "<div class='region-container'>";
 	
 	// Round 1
-	echo "<div class='round regional-round regional-round-1'><h3>$name Round 1</h3>";
+	echo "<div class='round regional-round regional-round-1'><h3>" . h($name) . " Round 1</h3>";
 	foreach($r1Games as $gId) {
 		$t1_idx = ($gId * 2) - 1;
 		$t2_idx = $gId * 2;
         // In View mode, team_data has the Seed + Name string
-		$t1_html = isset($team_data[$t1_idx]) ? $team_data[$t1_idx] : "TBD";
-		$t2_html = isset($team_data[$t2_idx]) ? $team_data[$t2_idx] : "TBD";
+		$t1_html = isset($team_data[$t1_idx]) ? h($team_data[$t1_idx]) : "TBD";
+		$t2_html = isset($team_data[$t2_idx]) ? h($team_data[$t2_idx]) : "TBD";
 		
 		echo "<div class='matchup'>
 				<div class='team' data-gameid='$gId'>$t1_html</div>
@@ -432,8 +432,8 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
         $src2 = ($gId - 32) * 2;
         
 		echo "<div class='matchup'>
-				<div class='team' data-gameid='$gId'>".(isset($picks[$src1]) ? $picks[$src1] : '&nbsp;')."</div>
-				<div class='team' data-gameid='$gId'>".(isset($picks[$src2]) ? $picks[$src2] : '&nbsp;')."</div>
+				<div class='team' data-gameid='$gId'>".(isset($picks[$src1]) ? h($picks[$src1]) : '&nbsp;')."</div>
+				<div class='team' data-gameid='$gId'>".(isset($picks[$src2]) ? h($picks[$src2]) : '&nbsp;')."</div>
 			  </div>";
 	}
 	echo "</div>";
@@ -445,8 +445,8 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
         $src2 = $src1 + 1;
 
 		echo "<div class='matchup'>
-				<div class='team' data-gameid='$gId'>".(isset($picks[$src1]) ? $picks[$src1] : '&nbsp;')."</div>
-				<div class='team' data-gameid='$gId'>".(isset($picks[$src2]) ? $picks[$src2] : '&nbsp;')."</div>
+				<div class='team' data-gameid='$gId'>".(isset($picks[$src1]) ? h($picks[$src1]) : '&nbsp;')."</div>
+				<div class='team' data-gameid='$gId'>".(isset($picks[$src2]) ? h($picks[$src2]) : '&nbsp;')."</div>
 			  </div>";
 	}
 	echo "</div>";
@@ -459,8 +459,8 @@ function renderViewRegion($name, $startTeamIndex, $r1Games, $r2Games, $r3Games, 
     $src2 = $src1 + 1;
 	
 	echo "<div class='matchup'>
-			<div class='team' data-gameid='$gId'>".(isset($picks[$src1]) ? $picks[$src1] : '&nbsp;')."</div>
-			<div class='team' data-gameid='$gId'>".(isset($picks[$src2]) ? $picks[$src2] : '&nbsp;')."</div>
+			<div class='team' data-gameid='$gId'>".(isset($picks[$src1]) ? h($picks[$src1]) : '&nbsp;')."</div>
+			<div class='team' data-gameid='$gId'>".(isset($picks[$src2]) ? h($picks[$src2]) : '&nbsp;')."</div>
 		  </div>";
 	echo "</div>";
 	
